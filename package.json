@@ -30,7 +30,8 @@
     "test": "jest",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate-undo": "npx sequelize-cli db:migrate:undo:all",
-    "seed": "npx sequelize-cli db:seed:all"
+    "seed": "npx sequelize-cli db:seed:all",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,scss,css}\""
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

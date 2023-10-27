@@ -12,7 +12,7 @@ module.exports = {
         lastName: "Silvera",
         email: "nobenjamin19@gmail.com",
         password: hash,
-        utype: 'ADMIN',
+        utype: "ADMIN",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -23,4 +23,3 @@ module.exports = {
     await queryInterface.bulkDelete("admins", null, {});
   },
 };
-
