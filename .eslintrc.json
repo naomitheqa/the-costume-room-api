@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "standard",
+    "prettier",
+    "eslint:recommended",
+    "plugin:jest/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "class-methods-use-this": "error",
+    "require-await": "error",
+    "func-style": ["error", "declaration"],
+    "max-lines-per-function": ["error", 40],
+    "max-depth": ["error", 4],
+    "max-lines": ["error", 400]
+  }
+}
