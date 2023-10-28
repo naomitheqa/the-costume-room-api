@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Item.init(
+  item.init(
     {
       id: {
         allowNull: false,
