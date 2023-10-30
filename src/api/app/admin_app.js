@@ -74,6 +74,8 @@ module.exports.getAllAdmins = async function (req, res) {
             } else {
                 res.status(200).json(responseController.SuccessfulDataFetch('List of admins retrieved.', {admins: admins, count: admins.length}))
             }
+        } else {
+            res.status(401).json(responseController.Unauthorized('Unauthorized.'))
         }
 
     } catch (err) {
@@ -94,6 +96,8 @@ module.exports.getAllUsers = async function (req, res) {
             } else {
                 res.status(200).json(responseController.SuccessfulDataFetch('List of general users retrieved.', {users: users, count: users.length}))
             }
+        } else {
+            res.status(401).json(responseController.Unauthorized('Unauthorized.'))
         }
 
     } catch (err) {
