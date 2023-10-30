@@ -51,7 +51,6 @@ module.exports.addUser = async function (req, res) {
             } else if (user === 1){
                 res.status(409).json(responseController.CausingDuplicate('User with listed email already exists.', { email: email }))
             } else {
-                console.log(user)
                 res.status(201).json(responseController.UserCreated('User with listed details has been created.', { id: user.id, name: `${user.firstName} ${user.lastName}`, email: user.email, expiryDate: user.expiryDate}));
             }
         } else {
