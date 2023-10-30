@@ -1,5 +1,4 @@
 const { user } = require("../../../db/models");
-import { hash } from "bcrypt";
 import { User } from "../classes/user";
 
 module.exports.insertUser = async function (
@@ -7,7 +6,10 @@ module.exports.insertUser = async function (
   lastName,
   email,
   password,
-  usertype
+  usertype,
+  enableExpiry,
+  expiryDate,
+  isFirstLogin
 ) {
   try {
     const temp = await user.create({
@@ -15,17 +17,25 @@ module.exports.insertUser = async function (
       lastName: lastName,
       email: email,
       password: password,
-      usertype: usertype,
+      utype: usertype,
+      enableExpiry: enableExpiry,
+      expiryDate: expiryDate,
+      isFirstLogin: isFirstLogin
     });
 
     if (temp) {
-      const user = new User(
-        temp.firstName,
-        temp.lastName,
-        temp.email,
-        temp.password
+      const userObj = new User(
+        temp.dataValues.hashid,
+        temp.dataValues.firstName,
+        temp.dataValues.lastName,
+        temp.dataValues.email,
+        temp.dataValues.password,
+        temp.dataValues.utype,
+        temp.dataValues.enableExpiry,
+        temp.dataValues.expiryDate,
+        temp.dataValues.isFirstLogin
       );
-      return user;
+      return userObj;
     }
   } catch (err) {
     console.log(
@@ -49,9 +59,11 @@ module.exports.selectUserByEmail = async function (email) {
         temp.dataValues.lastName,
         temp.dataValues.email,
         temp.dataValues.password,
-        temp.dataValues.utype
+        temp.dataValues.utype,
+        temp.dataValues.enableExpiry,
+        temp.dataValues.expiryDate,
+        temp.dataValues.isFirstLogin
       );
-      console.log(userObj);
       return userObj;
     }
 
@@ -74,7 +86,10 @@ module.exports.selectUserById = async function (id) {
         temp.dataValues.lastName,
         temp.dataValues.email,
         temp.dataValues.password,
-        temp.dataValues.utype
+        temp.dataValues.utype,
+        temp.dataValues.enableExpiry,
+        temp.dataValues.expiryDate,
+        temp.dataValues.isFirstLogin
       );
       return userObj;
     }
@@ -105,5 +120,69 @@ module.exports.updatePassword = async function (id, password) {
     } catch (err) {
       return false;
     }
+  }
+};
+
+module.exports.selectAllAdmins = async function (){
+  var admins = [];
+  try {
+    const temp = await user.findAll({
+      raw: true,
+      where: {
+        utype: 'ADMIN'
+      }
+    });
+
+    temp.forEach(admin => {
+      let userObj = new User(
+        admin.hashid,
+        admin.firstName,
+        admin.lastName,
+        admin.email,
+        admin.password,
+        admin.utype,
+        admin.enableExpiry,
+        admin.expiryDate,
+        admin.isFirstLogin
+      );
+
+      admins.push(userObj);
+    });
+
+    return admins;
+  } catch (err) {
+    return 1;
+  }
+};
+
+module.exports.selectAllGeneralUsers = async function (){
+  var generals = [];
+  try {
+    const temp = await user.findAll({
+      raw: true,
+      where: {
+        utype: 'GENERAL'
+      }
+    });
+
+    temp.forEach(admin => {
+      let userObj = new User(
+        admin.hashid,
+        admin.firstName,
+        admin.lastName,
+        admin.email,
+        admin.password,
+        admin.utype,
+        admin.enableExpiry,
+        admin.expiryDate,
+        admin.isFirstLogin
+      );
+
+      generals.push(userObj);
+    });
+
+    return generals;
+  } catch (err) {
+    return 1;
   }
 };

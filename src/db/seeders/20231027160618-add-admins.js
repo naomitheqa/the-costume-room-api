@@ -13,6 +13,8 @@ module.exports = {
         email: "nobenjamin19@gmail.com",
         password: hash,
         utype: "ADMIN",
+        enableExpiry: false,
+        isFirstLogin: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

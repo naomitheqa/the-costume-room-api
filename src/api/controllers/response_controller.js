@@ -26,4 +26,24 @@ export class ResponseController {
     const err = new Response(401, message, (data = "N/A"));
     return err;
   }
+
+  UserCreated(message, data) {
+    const success = new Response(201, message, data);
+    return success;
+  }
+
+  CausingDuplicate(message, data) {
+    const err = new Response(409, message, data);
+    return err;
+  }
+
+  CouldNotCompleteRequest(message, data) {
+    const err = new Response(500, message, data);
+    return err;
+  }
+
+  SuccessfulDataFetch(message, data) {
+    const success = new Response(200, message, data);
+    return success;
+  }
 }

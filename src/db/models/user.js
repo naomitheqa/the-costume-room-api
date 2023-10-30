@@ -45,6 +45,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("ADMIN, GENERAL"),
         allowNull: false,
       },
+      enableExpiry: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      expiryDate: {
+        type: DataTypes.DATEONLY,
+        allowNull: true
+      },
+      isFirstLogin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
     },
     {
       sequelize,

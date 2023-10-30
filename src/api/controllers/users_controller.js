@@ -6,6 +6,12 @@ const config = require("../../../config/env");
 const jwt = require("jsonwebtoken");
 
 export class UserController {
+
+  /**
+   * Authenticates user for use of the API
+   * @param {String} email 
+   * @param {String} password 
+   */
   async authenticate(email, password) {
     if (validator.email(email) && validator.password(password)) {
       try {
@@ -38,6 +44,12 @@ export class UserController {
     }
   }
 
+  /**
+   * Allows for a user to update their password once authenticated.
+   * @param {UUID} id 
+   * @param {String} cpassword - The user's current password
+   * @param {String} npassword - The password that the user wants to change to
+   */
   async updatePassword(id, cpassword, npassword) {
     if (validator.password(cpassword) && validator.password(npassword)) {
       try {
@@ -63,15 +75,28 @@ export class UserController {
     }
   }
 
+  /**
+   * Assess whether or not a provided header contains a valid JWT token
+   * @param {Object} header 
+   */
   async validateAccessToken(header) {
     if (header && header.authorization) {
       const token = header.authorization.split(" ")[1];
       if (token) {
-        const payload = await jwt.verify(token, config.jwt_key);
+        const payload = jwt.verify(token, config.jwt_key);
         if (payload && payload.id) {
-          return true;
+          try {
+            const user = await user_data.selectUserById(payload.id);
+            if (user == 1){
+              return 1;
+            } else {
+              return { isfound: true, userType:user.usertype };
+            }
+          } catch (err) {
+            return err;
+          }
         } else {
-          return false;
+          return { isfound: false };
         }
       }
       return null;

@@ -19,7 +19,7 @@ module.exports.login = async function (req, res) {
         } if (response === 1){
             res.status(400).json(responseController.NotFound('User with given credentials not found.'));
         }else {
-            res.status(200).json(responseController.LoginSuccess('Login successful.', {token: response.token, userId: response.id}));
+            res.status(200).json(responseController.LoginSuccess('Login successful.', {token: `JWT ${response.token}`, userId: response.id}));
         }
     } catch(err) {
         res.status(500).json(new Error("Oops...", { cause: err}));
@@ -38,7 +38,7 @@ module.exports.updatePassword = async function (req, res) {
     try{
         const ans = await userController.validateAccessToken(req.headers);
         
-        if (ans){
+        if (ans.isfound){
             const response = await userController.updatePassword(userId, cpassword, npassword);
             if (response === 0){
                 res.status(400).json(responseController.BadRequest('Current and new passwords could be invalid.'));
