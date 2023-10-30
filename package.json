@@ -26,13 +26,16 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
+    "dev-start": "nodemon --exec babel-node src/index.js",
     "lint": "eslint ./src",
     "test": "jest",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate-undo": "npx sequelize-cli db:migrate:undo:all",
-    "seed": "npx sequelize-cli db:seed:all"
+    "seed": "npx sequelize-cli db:seed:all",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,scss,css}\""
   },
   "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.29",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -42,7 +45,8 @@
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.33.0",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "swagger-ui-express": "^5.0.0"
   },
   "jest": {
     "testEnvironment": "node",
