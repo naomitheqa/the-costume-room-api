@@ -17,7 +17,7 @@ export class AdminController {
 
                 if (user == 1){
                     const hash = await bcrypt.hash('GodFirst1', 10);
-                    const newUser = await user_data.insertUser(firstName, lastName, email, hash, 'ADMIN', false);
+                    const newUser = await user_data.insertUser(firstName, lastName, email, hash, 'ADMIN', false, null, true);
                     return newUser;
                 } else {
                    return 1;
@@ -45,7 +45,7 @@ export class AdminController {
 
                 if (user == 1){
                     const hash = await bcrypt.hash('GodFirst1', 10);
-                    const newUser = await user_data.insertUser(firstName, lastName, email, hash, 'GENERAL', true, expiryDate);
+                    const newUser = await user_data.insertUser(firstName, lastName, email, hash, 'GENERAL', true, expiryDate, true);
                     return newUser;
                 } else {
                    return 1;

@@ -45,6 +45,10 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: true
       },
+      isFirstLogin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

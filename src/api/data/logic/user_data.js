@@ -8,7 +8,8 @@ module.exports.insertUser = async function (
   password,
   usertype,
   enableExpiry,
-  expiryDate
+  expiryDate,
+  isFirstLogin
 ) {
   try {
     const temp = await user.create({
@@ -18,7 +19,8 @@ module.exports.insertUser = async function (
       password: password,
       utype: usertype,
       enableExpiry: enableExpiry,
-      expiryDate: expiryDate
+      expiryDate: expiryDate,
+      isFirstLogin: isFirstLogin
     });
 
     if (temp) {
@@ -30,7 +32,8 @@ module.exports.insertUser = async function (
         temp.dataValues.password,
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
-        temp.dataValues.expiryDate
+        temp.dataValues.expiryDate,
+        temp.dataValues.isFirstLogin
       );
       return userObj;
     }
@@ -58,7 +61,8 @@ module.exports.selectUserByEmail = async function (email) {
         temp.dataValues.password,
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
-        temp.dataValues.expiryDate
+        temp.dataValues.expiryDate,
+        temp.dataValues.isFirstLogin
       );
       return userObj;
     }
@@ -84,7 +88,8 @@ module.exports.selectUserById = async function (id) {
         temp.dataValues.password,
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
-        temp.dataValues.expiryDate
+        temp.dataValues.expiryDate,
+        temp.dataValues.isFirstLogin
       );
       return userObj;
     }
