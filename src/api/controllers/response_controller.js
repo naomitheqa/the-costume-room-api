@@ -36,4 +36,14 @@ export class ResponseController {
     const err = new Response(409, message, data);
     return err;
   }
+
+  CouldNotCompleteRequest(message, data) {
+    const err = new Response(500, message, data);
+    return err;
+  }
+
+  SuccessfulDataFetch(message, data) {
+    const success = new Response(200, message, data);
+    return success;
+  }
 }

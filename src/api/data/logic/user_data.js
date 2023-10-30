@@ -122,3 +122,67 @@ module.exports.updatePassword = async function (id, password) {
     }
   }
 };
+
+module.exports.selectAllAdmins = async function (){
+  var admins = [];
+  try {
+    const temp = await user.findAll({
+      raw: true,
+      where: {
+        utype: 'ADMIN'
+      }
+    });
+
+    temp.forEach(admin => {
+      let userObj = new User(
+        admin.hashid,
+        admin.firstName,
+        admin.lastName,
+        admin.email,
+        admin.password,
+        admin.utype,
+        admin.enableExpiry,
+        admin.expiryDate,
+        admin.isFirstLogin
+      );
+
+      admins.push(userObj);
+    });
+
+    return admins;
+  } catch (err) {
+    return 1;
+  }
+};
+
+module.exports.selectAllGeneralUsers = async function (){
+  var generals = [];
+  try {
+    const temp = await user.findAll({
+      raw: true,
+      where: {
+        utype: 'GENERAL'
+      }
+    });
+
+    temp.forEach(admin => {
+      let userObj = new User(
+        admin.hashid,
+        admin.firstName,
+        admin.lastName,
+        admin.email,
+        admin.password,
+        admin.utype,
+        admin.enableExpiry,
+        admin.expiryDate,
+        admin.isFirstLogin
+      );
+
+      generals.push(userObj);
+    });
+
+    return generals;
+  } catch (err) {
+    return 1;
+  }
+};

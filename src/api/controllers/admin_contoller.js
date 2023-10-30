@@ -6,9 +6,9 @@ const bcrypt = require("bcrypt");
 export class AdminController {
     /**
      * Allows an admib to create and add another admin
-     * @param {*} firstName 
-     * @param {*} lastName 
-     * @param {*} email 
+     * @param {String} firstName 
+     * @param {String} lastName 
+     * @param {String} email 
      */
     async createAdmin(firstName, lastName, email){
         if (validator.name(firstName) && validator.name(lastName) && validator.email(email)){
@@ -32,10 +32,10 @@ export class AdminController {
 
     /**
      * Allows an admin to create and add a general user
-     * @param {*} firstName 
-     * @param {*} lastName 
-     * @param {*} email 
-     * @param {*} expiryDate 
+     * @param {String} firstName 
+     * @param {String} lastName 
+     * @param {String} email 
+     * @param {Date} expiryDate 
      * @returns 
      */
     async createUser(firstName, lastName, email, expiryDate){
@@ -55,6 +55,60 @@ export class AdminController {
             }
         } else {
             return 0;
+        }
+    }
+
+    async listAdmins(){
+        var admins = [];
+        try {
+            const temp = await user_data.selectAllAdmins();
+
+            if (temp == 1){
+                return 1;
+            } else {
+                temp.forEach(admin => {
+                    let tempUser = {
+                        id: admin.id,
+                        firstName: admin.firstName,
+                        lastName: admin.lastName,
+                        email: admin.email
+                    }
+
+                    admins.push(tempUser);
+                });
+
+                return admins;
+            }
+        } catch (err) {
+            return err;
+        }
+    }
+
+    async listGeneralUsers(){
+        var users = [];
+        try {
+            const temp = await user_data.selectAllGeneralUsers();
+
+            if (temp == 1){
+                return 1;
+            } else {
+                temp.forEach(user => {
+                    let tempUser = {
+                        id: user.id,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        expiryEnabled: user.expiryEnabled,
+                        expiryDate: user.expiryDate
+                    }
+
+                    users.push(tempUser);
+                });
+
+                return users;
+            }
+        } catch (err) {
+            return err;
         }
     }
 }

@@ -61,3 +61,43 @@ module.exports.addUser = async function (req, res) {
         return;
     }
 };
+
+module.exports.getAllAdmins = async function (req, res) {
+    try {
+        const ans = await userController.validateAccessToken(req.headers);
+
+        if (ans.isfound && ans.userType == 'ADMIN'){
+            const admins = await adminController.listAdmins();
+
+            if (admins == 1){
+                res.status(500).json(responseController.CouldNotCompleteRequest('Could not complete request to get all admins.', {admins: {}}))
+            } else {
+                res.status(200).json(responseController.SuccessfulDataFetch('List of admins retrieved.', {admins: admins, count: admins.length}))
+            }
+        }
+
+    } catch (err) {
+        res.status(500).json(new Error("Oops...", { cause: err}));
+        return;
+    }
+};
+
+module.exports.getAllUsers = async function (req, res) {
+    try {
+        const ans = await userController.validateAccessToken(req.headers);
+
+        if (ans.isfound && ans.userType == 'ADMIN'){
+            const users = await adminController.listGeneralUsers();
+
+            if (users == 1){
+                res.status(500).json(responseController.CouldNotCompleteRequest('Could not complete request to get all general users.', {users: {}}))
+            } else {
+                res.status(200).json(responseController.SuccessfulDataFetch('List of general users retrieved.', {users: users, count: users.length}))
+            }
+        }
+
+    } catch (err) {
+        res.status(500).json(new Error("Oops...", { cause: err}));
+        return;
+    }
+};
