@@ -100,7 +100,7 @@ module.exports.valAlphanumeric = function (val) {
  * @author Spark-Inc
  * @return {Boolean}
  */
-module.exports.valName = function (val) {
+module.exports.name = function (val) {
   if (
     val === null ||
     val === "" ||
@@ -181,7 +181,7 @@ module.exports.email = function (val) {
  * @param {*} dateString
  * @returns {Boolean}
  */
-module.exports.valDate = function (dateString) {
+module.exports.date = function (dateString) {
   if (
     dateString === undefined ||
     dateString === null ||

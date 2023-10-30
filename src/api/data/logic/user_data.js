@@ -1,5 +1,4 @@
 const { user } = require("../../../db/models");
-import { hash } from "bcrypt";
 import { User } from "../classes/user";
 
 module.exports.insertUser = async function (
@@ -7,7 +6,9 @@ module.exports.insertUser = async function (
   lastName,
   email,
   password,
-  usertype
+  usertype,
+  enableExpiry,
+  expiryDate
 ) {
   try {
     const temp = await user.create({
@@ -15,17 +16,23 @@ module.exports.insertUser = async function (
       lastName: lastName,
       email: email,
       password: password,
-      usertype: usertype,
+      utype: usertype,
+      enableExpiry: enableExpiry,
+      enableExpiry: expiryDate
     });
 
     if (temp) {
-      const user = new User(
-        temp.firstName,
-        temp.lastName,
-        temp.email,
-        temp.password
+      const userObj = new User(
+        temp.dataValues.hashid,
+        temp.dataValues.firstName,
+        temp.dataValues.lastName,
+        temp.dataValues.email,
+        temp.dataValues.password,
+        temp.dataValues.utype,
+        temp.dataValues.enableExpiry,
+        temp.dataValues.expiryDate
       );
-      return user;
+      return userObj;
     }
   } catch (err) {
     console.log(
@@ -49,9 +56,10 @@ module.exports.selectUserByEmail = async function (email) {
         temp.dataValues.lastName,
         temp.dataValues.email,
         temp.dataValues.password,
-        temp.dataValues.utype
+        temp.dataValues.utype,
+        temp.dataValues.enableExpiry,
+        temp.dataValues.expiryDate
       );
-      console.log(userObj);
       return userObj;
     }
 
@@ -74,7 +82,9 @@ module.exports.selectUserById = async function (id) {
         temp.dataValues.lastName,
         temp.dataValues.email,
         temp.dataValues.password,
-        temp.dataValues.utype
+        temp.dataValues.utype,
+        temp.dataValues.enableExpiry,
+        temp.dataValues.expiryDate
       );
       return userObj;
     }

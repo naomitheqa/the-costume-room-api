@@ -67,11 +67,20 @@ export class UserController {
     if (header && header.authorization) {
       const token = header.authorization.split(" ")[1];
       if (token) {
-        const payload = await jwt.verify(token, config.jwt_key);
+        const payload = jwt.verify(token, config.jwt_key);
         if (payload && payload.id) {
-          return true;
+          try {
+            const user = await user_data.selectUserById(payload.id);
+            if (user == 1){
+              return 1;
+            } else {
+              return { isfound: true, userType:user.usertype };
+            }
+          } catch (err) {
+            return err;
+          }
         } else {
-          return false;
+          return { isfound: false };
         }
       }
       return null;
