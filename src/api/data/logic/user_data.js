@@ -1,4 +1,5 @@
 const { user } = require("../../../db/models");
+import { hash } from "bcrypt";
 import { User } from "../classes/user";
 
 module.exports.insertUser = async function (
@@ -33,7 +34,7 @@ module.exports.insertUser = async function (
   }
 };
 
-module.exports.selectUser = async function (email) {
+module.exports.selectUserByEmail = async function (email) {
   if (email) {
     const temp = await user.findOne({
       where: {
@@ -55,5 +56,54 @@ module.exports.selectUser = async function (email) {
     }
 
     return 1;
+  }
+};
+
+module.exports.selectUserById = async function (id) {
+  if (id) {
+    const temp = await user.findOne({
+      where: {
+        hashid: id,
+      },
+    });
+
+    if (temp) {
+      const userObj = new User(
+        temp.dataValues.hashid,
+        temp.dataValues.firstName,
+        temp.dataValues.lastName,
+        temp.dataValues.email,
+        temp.dataValues.password,
+        temp.dataValues.utype
+      );
+      return userObj;
+    }
+
+    return 1;
+  }
+};
+
+module.exports.updatePassword = async function (id, password) {
+  if (id) {
+    try {
+      const temp = await user.findOne({
+        where: {
+          hashid: id,
+        },
+      });
+
+      await user.update(
+        { password: password },
+        {
+          where: {
+            hashid: temp.dataValues.hashid,
+          },
+        }
+      );
+
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 };

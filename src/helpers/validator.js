@@ -3,7 +3,7 @@
 const pwrd = /^[A-Za-z0-9_@./#$%&+-]*$/;
 const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
 const gname = /^[a-z ,.'-]+$/i;
-const emailR =/.{1,}@[^.]{1,}/;
+const emailR = /.{1,}@[^.]{1,}/;
 
 // Helpers
 /**
@@ -175,7 +175,6 @@ module.exports.email = function (val) {
     }
   }
 };
-
 
 /**
  * @description Date erver side validation

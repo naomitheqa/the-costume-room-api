@@ -17,11 +17,43 @@ module.exports.login = async function (req, res) {
         if (response === 0){
             res.status(400).json(responseController.BadRequest('User email or password invalid.'));
         } if (response === 1){
-            res.status(400).json(responseController.NotFound('User with guven credentials not found.'));
+            res.status(400).json(responseController.NotFound('User with given credentials not found.'));
         }else {
-            res.status(200).json(responseController.LoginSuccess('Login successful.', {token: response}));
+            res.status(200).json(responseController.LoginSuccess('Login successful.', {token: response.token, userId: response.id}));
         }
-    } catch(err){
+    } catch(err) {
+        res.status(500).json(new Error("Oops...", { cause: err}));
+        return;
+    }
+};
+
+
+module.exports.updatePassword = async function (req, res) {
+    const { userId, cpassword, npassword} = req.body;
+    if (!(userId && cpassword && npassword)){
+        res.status(400).json(responseController.BadRequest('Some data has not been provided.'));
+        return;
+    }
+
+    try{
+        const ans = await userController.validateAccessToken(req.headers);
+        
+        if (ans){
+            const response = await userController.updatePassword(userId, cpassword, npassword);
+            if (response === 0){
+                res.status(400).json(responseController.BadRequest('Current and new passwords could be invalid.'));
+            } if (response === -1){
+                res.status(400).json(responseController.BadRequest('Current password is incorrect for provided user.'));
+                return;
+            } if (response === 1){
+                res.status(400).json(responseController.NotFound('User with given credentials not found.'));
+            } else {
+                res.status(204).json(responseController.SuccessfulNoContent());
+            }
+        } else {
+            res.status(401).json(responseController.Unauthorized('Unauthorized.'))
+        }
+    } catch(err) {
         res.status(500).json(new Error("Oops...", { cause: err}));
         return;
     }
