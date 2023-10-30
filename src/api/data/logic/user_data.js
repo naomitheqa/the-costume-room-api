@@ -18,7 +18,7 @@ module.exports.insertUser = async function (
       password: password,
       utype: usertype,
       enableExpiry: enableExpiry,
-      enableExpiry: expiryDate
+      expiryDate: expiryDate
     });
 
     if (temp) {
