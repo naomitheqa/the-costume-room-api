@@ -186,3 +186,16 @@ module.exports.selectAllGeneralUsers = async function (){
     return 1;
   }
 };
+
+module.exports.deleteUser = async function (id) {
+  try {
+    await user.destroy({
+      where: {
+        hashid: id
+      }
+    });
+    return 0;
+  } catch (err) {
+    return 1;
+  }
+}
