@@ -105,3 +105,34 @@ module.exports.getAllUsers = async function (req, res) {
         return;
     }
 };
+
+module.exports.removeUser = async function (req, res) {
+    const { id } = req.body;
+    if (!id) {
+        res.status(400).json(responseController.BadRequest('A user id has not been provided.'));
+        return;
+    }
+
+    try {
+        const ans = await userController.validateAccessToken(req.headers);
+
+        if (ans.isfound && ans.userType == 'ADMIN'){
+            const confirm = await adminController.deleteUser(id, req.headers);
+
+            if (confirm.response == -1){
+                res.status(400).json(responseController.BadRequest('Cannot perform self delete.', { userId: id, adminId: confirm.adminId}));
+            } else if (confirm.response == false){
+                res.status(500).json(responseController.CouldNotCompleteRequest('Could not complete request to remove listed user.', { userId:id }))
+            } else if (confirm.response == true){
+                res.status(204).json(responseController.SuccessfulNoContent());
+            } else {
+                res.status(500).json(responseController.CouldNotCompleteRequest('Could not complete request to remove listed user.', { userId:id , err:confirm.response}))
+            }
+        } else {
+            res.status(401).json(responseController.Unauthorized('Unauthorized.'))
+        }
+    } catch (err) {
+        res.status(500).json(new Error("Oops...", { cause: err}));
+        return;
+    }
+};

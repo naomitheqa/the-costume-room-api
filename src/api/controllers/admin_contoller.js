@@ -2,6 +2,8 @@ const user_data = require("../data/logic/user_data");
 
 const validator = require("../../helpers/validator");
 const bcrypt = require("bcrypt");
+const config = require("../../../config/env");
+const jwt = require("jsonwebtoken");
 
 export class AdminController {
     /**
@@ -111,4 +113,33 @@ export class AdminController {
             return err;
         }
     }
+
+     /**
+   * Allows a user (an admin) to delete another user
+   * @param {*} id 
+   * @returns 
+   */
+  async deleteUser(id, header){
+    const token = header.authorization.split(" ")[1];
+    if (token) {
+      const payload = jwt.verify(token, config.jwt_key);
+      if (id == payload.id){
+        return {response: -1, adminId: payload.id};
+      } else {
+        try{
+          const confirm = await user_data.deleteUser(id);
+    
+          if (confirm == 0){
+            return {response: true};
+          } else {
+            return {response: false};
+          }
+        } catch (err) {
+          return {response: err};
+        }
+      }
+    } else {
+      return 1;
+    }
+  }
 }

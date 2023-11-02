@@ -6,5 +6,6 @@ router.route("/add-admin").post(AdminApplication.addAdmin);
 router.route("/add-user").post(AdminApplication.addUser);
 router.route("/admins").get(AdminApplication.getAllAdmins);
 router.route("/users").get(AdminApplication.getAllUsers);
+router.route("/delete-user").delete(AdminApplication.removeUser);
 
 module.exports = router;
