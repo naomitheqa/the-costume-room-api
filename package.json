@@ -32,7 +32,8 @@
     "migrate": "npx sequelize-cli db:migrate",
     "migrate-undo": "npx sequelize-cli db:migrate:undo:all",
     "seed": "npx sequelize-cli db:seed:all",
-    "format": "prettier --write \"**/*.{js,jsx,json,md,scss,css}\""
+    "format": "prettier --write \"**/*.{js,jsx,json,md,scss,css}\"",
+    "vercel-build": "echo hello"
   },
   "dependencies": {
     "@sequelize/core": "^7.0.0-alpha.29",
