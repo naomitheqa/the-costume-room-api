@@ -8,7 +8,11 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
-const sequelize = new Sequelize(config.dbConnectionString, config.dbOptions);
+// const sequelize = new Sequelize(config.dbConnectionString, config.dbOptions);
+
+const sequelize = new Sequelize('costumeroom', 'postgres', 'aLowbrid', {
+  dialect: 'postgres'
+});
 
 // let sequelize;
 // if (config.use_env_variable) {
