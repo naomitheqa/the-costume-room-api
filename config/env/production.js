@@ -7,7 +7,7 @@ const prodConfig = {
   email: process.env.MAIL_EMAIL,
   jwt_key: process.env.SECRET_KEY,
   jwt_expiration: "1h",
-  dbConnectionString: process.env.DATABASE_URL,
+  dbConnectionString: process.env.POSTGRES_URL,
   dbOptions: {
     pool: {
       max: 10,
