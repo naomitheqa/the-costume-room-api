@@ -3,11 +3,9 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
-import serverless from "serverless-http";
 
 const users = require("./api/routes/users_routes");
 const admin = require("./api/routes/admin_routes");
-
 
 const config = require("../config/env");
 const app = express();
@@ -27,5 +25,4 @@ app.listen(8080, () => {
 });
 
 
-// export default app;
-export const handler = serverless(app)
+export default app;
