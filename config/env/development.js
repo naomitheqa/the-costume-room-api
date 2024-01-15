@@ -3,7 +3,7 @@ require("dotenv").config();
 const devConfig = {
   port: process.env.PORT || 8080,
   mailPort: Number(process.env.MAIL_PORT),
-  password: process.env.MAIL_PASSWORD,
+  password: process.env.PASSWORD,
   email: process.env.MAIL_EMAIL,
   jwt_key: process.env.SECRET_KEY,
   jwt_expiration: "1h",

@@ -20,11 +20,6 @@ app.get("/", (req, res, next) => {
   res.json({ message: "Welcome to The Costume Room API..." });
 });
 
-app.get('/favicon.ico', function(req, res) { 
-  res.status(204);
-  res.end();    
-});
-
 app.listen(8080, () => {
   console.log(`Server is running`);
 });
