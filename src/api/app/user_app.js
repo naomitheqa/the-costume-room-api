@@ -1,18 +1,19 @@
-import { UserController} from "../controllers/users_controller";
-import { ResponseController } from "../controllers/response_controller";
+import { UserController } from "../controllers/users_controller.js";
+import { ResponseController } from "../controllers/response_controller.js";
 
 const userController = new UserController();
 const responseController = new ResponseController();
 
 
-module.exports.login = async function (req, res) {
+export const login = async function (req, res) {
     const { email, password } = req.body;
     if (!(email && password)) {
         res.status(400).json(responseController.BadRequest('User email or password not provided.'));
         return;
     }
-
+    
     try{
+        console.log(email);
         const response = await userController.authenticate(email, password);
         if (response === 0){
             res.status(400).json(responseController.BadRequest('User email or password invalid.'));
@@ -27,8 +28,7 @@ module.exports.login = async function (req, res) {
     }
 };
 
-
-module.exports.updatePassword = async function (req, res) {
+export const updatePassword = async function (req, res) {
     const { userId, cpassword, npassword} = req.body;
     if (!(userId && cpassword && npassword)){
         res.status(400).json(responseController.BadRequest('Some data has not been provided.'));

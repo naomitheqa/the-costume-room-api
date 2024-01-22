@@ -1,8 +1,8 @@
 "use strict";
-const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
+import bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 
-module.exports = {
+export default {
   async up(queryInterface, Sequelize) {
     const hash = await bcrypt.hash("GodFirst", 10);
     await queryInterface.bulkInsert("users", [

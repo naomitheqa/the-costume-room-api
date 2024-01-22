@@ -26,4 +26,4 @@ const prodConfig = {
   },
 };
 
-module.exports = prodConfig;
+export default prodConfig;

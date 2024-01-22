@@ -1,9 +1,11 @@
-const user_data = require("../data/logic/user_data");
+import { UserData } from '../data/logic/user_data.js';
+import { Validator } from '../../helpers/validator.js';
+import bcrypt from 'bcrypt';
+import config from '../../../config/env/index.js';
+import jwt from 'jsonwebtoken';
 
-const validator = require("../../helpers/validator");
-const bcrypt = require("bcrypt");
-const config = require("../../../config/env");
-const jwt = require("jsonwebtoken");
+const userData = new UserData();
+const validator = new Validator();
 
 export class UserController {
 
@@ -15,7 +17,9 @@ export class UserController {
   async authenticate(email, password) {
     if (validator.email(email) && validator.password(password)) {
       try {
-        const user = await user_data.selectUserByEmail(email);
+        const user = await userData.selectUserByEmail(email);
+
+        console.log(user)
 
         if (user == 1) {
           return 1;
@@ -53,14 +57,14 @@ export class UserController {
   async updatePassword(id, cpassword, npassword) {
     if (validator.password(cpassword) && validator.password(npassword)) {
       try {
-        const user = await user_data.selectUserById(id);
+        const user = await userData.selectUserById(id);
 
         if (user == 1) {
           return 1;
         } else {
           if (bcrypt.compareSync(cpassword, user.password)) {
             const hash = await bcrypt.hash(npassword, 10);
-            const update = await user_data.updatePassword(id, hash);
+            const update = await userData.updatePassword(id, hash);
 
             return update;
           } else {
@@ -86,7 +90,7 @@ export class UserController {
         const payload = jwt.verify(token, config.jwt_key);
         if (payload && payload.id) {
           try {
-            const user = await user_data.selectUserById(payload.id);
+            const user = await userData.selectUserById(payload.id);
             if (user == 1){
               return 1;
             } else {

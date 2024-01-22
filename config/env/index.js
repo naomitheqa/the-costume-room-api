@@ -1,5 +1,9 @@
+export let env;
+
 if (process.env.NODE_ENV === "production") {
-  module.exports = require("./production");
+  env = ("./production");
 } else {
-  module.exports = require("./development");
+  env = ("./development");
 }
+
+export default env;

@@ -4,10 +4,10 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
 
-const users = require("./api/routes/users_routes");
-const admin = require("./api/routes/admin_routes");
+import users from './api/routes/users_routes.js';
+import admin from './api/routes/admin_routes.js';
+// import config from '../config/dev.env';
 
-const config = require("../config/env");
 const app = express();
 
 // Initialize Middleware

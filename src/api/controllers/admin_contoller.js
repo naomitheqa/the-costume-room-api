@@ -1,9 +1,11 @@
-const user_data = require("../data/logic/user_data");
+import { UserData } from '../data/logic/user_data.js';
+import { Validator } from '../../helpers/validator.js';
+import bcrypt from 'bcrypt';
+import config from '../../../config/env/index.js';
+import jwt from 'jsonwebtoken';
 
-const validator = require("../../helpers/validator");
-const bcrypt = require("bcrypt");
-const config = require("../../../config/env");
-const jwt = require("jsonwebtoken");
+const userData = new UserData();
+const validator = new Validator();
 
 export class AdminController {
     /**

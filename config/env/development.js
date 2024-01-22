@@ -19,4 +19,4 @@ const devConfig = {
   },
 };
 
-module.exports = devConfig;
+export default devConfig;
