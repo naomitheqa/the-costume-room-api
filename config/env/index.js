@@ -1,9 +1,18 @@
-export let env;
-
 if (process.env.NODE_ENV === "production") {
-  env = ("./production");
+  module.exports = require("./production");
 } else {
-  env = ("./development");
+  module.exports = require("./development");
 }
 
-export default env;
+
+
+
+// export let env;
+
+// if (process.env.NODE_ENV === "production") {
+//   env = ("./production");
+// } else {
+//   env = ("./development");
+// }
+
+// export default env;

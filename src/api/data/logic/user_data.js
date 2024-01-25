@@ -1,6 +1,5 @@
 import user from '../../../db/models/user.js';
-import User from "../classes/user.js";
-
+import { User } from "../classes/user.js";
 
 export class UserData {
   
@@ -48,15 +47,18 @@ export class UserData {
   };
 
   async selectUserByEmail(email) {
-    console.log(email + 1)
     if (email) {
-      const temp = await user.findOne({
-        where: {
-          email: email,
-        },
-      });
-      console.log('hmm')
+      try {
+        const temp = await user.findOne({
+          where: {
+            email: email,
+          },
+        });
       console.log(temp)
+      } catch (err) {
+        console.log(err)
+      }
+      
 
       if (temp) {
         const userObj = new User(
