@@ -1,10 +1,10 @@
-import { UserData } from '../data/logic/user_data.js';
+import userData  from '../data/logic/user_data.js';
 import { Validator } from '../../helpers/validator.js';
 import bcrypt from 'bcrypt';
 import config from '../../../config/env/index.js';
 import jwt from 'jsonwebtoken';
 
-const userData = new UserData();
+// const userData = new UserData();
 const validator = new Validator();
 
 export class UserController {
