@@ -46,9 +46,10 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: true
       },
-      isFirstLogin: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false
+      loginCount: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

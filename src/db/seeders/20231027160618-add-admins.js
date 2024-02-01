@@ -14,7 +14,6 @@ module.exports = {
         password: hash,
         utype: "ADMIN",
         enableExpiry: false,
-        isFirstLogin: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

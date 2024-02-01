@@ -52,9 +52,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: true
       },
-      isFirstLogin: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
+      loginCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
       },
     },
     {

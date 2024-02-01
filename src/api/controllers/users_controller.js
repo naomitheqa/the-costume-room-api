@@ -1,8 +1,9 @@
 import userData  from '../data/logic/user_data.js';
 import { Validator } from '../../helpers/validator.js';
 import bcrypt from 'bcrypt';
-import config from '../../../config/env/index.js';
+import config from '../../../config/env/development.js'; //this is now causing the problem 
 import jwt from 'jsonwebtoken';
+import {} from 'dotenv/config';
 
 // const userData = new UserData();
 const validator = new Validator();
@@ -30,11 +31,12 @@ export class UserController {
                 id: user.id,
                 email: user.email,
               },
-              config.jwt_key,
+              process.env.SECRET_KEY, //this is undefined. everything works when I replace it with a random str
               {
                 expiresIn: "1h",
               }
             );
+            console.log(token);
             return { token: token, id: user.id };
           } else {
             return 1;
@@ -87,7 +89,7 @@ export class UserController {
     if (header && header.authorization) {
       const token = header.authorization.split(" ")[1];
       if (token) {
-        const payload = jwt.verify(token, config.jwt_key);
+        const payload = jwt.verify(token, process.env.SECRET_KEY);
         if (payload && payload.id) {
           try {
             const user = await userData.selectUserById(payload.id);

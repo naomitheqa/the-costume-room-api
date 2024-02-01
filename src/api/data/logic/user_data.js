@@ -1,4 +1,4 @@
-const { user } = require('../../../db/models/user.js');
+const { user } = require('../../../db/models');
 // import { User } from "../classes/user.js" ;
 
 // export class UserData {
@@ -210,7 +210,7 @@ const { user } = require('../../../db/models/user.js');
 // }
 
 class User {
-  constructor(id, firstName, lastName, email, password, usertype, enableExpiry, expiryDate, isFirstLogin) {
+  constructor(id, firstName, lastName, email, password, usertype, enableExpiry, expiryDate) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -218,8 +218,7 @@ class User {
     this.password = password;
     this.usertype = usertype;
     this.enableExpiry = enableExpiry;
-    this.expiryDate = expiryDate;
-    this.isFirstLogin = isFirstLogin;
+    this.expiryDate = expiryDate;;
   }
 }
 
@@ -231,7 +230,6 @@ module.exports.insertUser = async function (
   usertype,
   enableExpiry,
   expiryDate,
-  isFirstLogin
 ) {
   try {
     const temp = await user.create({
@@ -241,8 +239,7 @@ module.exports.insertUser = async function (
       password: password,
       utype: usertype,
       enableExpiry: enableExpiry,
-      expiryDate: expiryDate,
-      isFirstLogin: isFirstLogin
+      expiryDate: expiryDate
     });
 
     if (temp) {
@@ -255,7 +252,7 @@ module.exports.insertUser = async function (
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
         temp.dataValues.expiryDate,
-        temp.dataValues.isFirstLogin
+        temp.dataValues.loginCount
       );
       return userObj;
     }
@@ -277,7 +274,6 @@ module.exports.selectUserByEmail = async function (email) {
       },
     });
 
-    console.log(temp)
 
     if (temp) {
       const userObj = new User(
@@ -289,7 +285,7 @@ module.exports.selectUserByEmail = async function (email) {
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
         temp.dataValues.expiryDate,
-        temp.dataValues.isFirstLogin
+        temp.dataValues.loginCount
       );
       return userObj;
     }
@@ -322,7 +318,7 @@ module.exports.selectUserById = async function (id) {
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
         temp.dataValues.expiryDate,
-        temp.dataValues.isFirstLogin
+        temp.dataValues.loginCount
       );
       return userObj;
     }
@@ -376,7 +372,7 @@ module.exports.selectAllAdmins = async function (){
         admin.utype,
         admin.enableExpiry,
         admin.expiryDate,
-        admin.isFirstLogin
+        admin.loginCount
       );
 
       admins.push(userObj);
@@ -408,7 +404,7 @@ module.exports.selectAllGeneralUsers = async function (){
         admin.utype,
         admin.enableExpiry,
         admin.expiryDate,
-        admin.isFirstLogin
+        admin.loginCount
       );
 
       generals.push(userObj);
