@@ -1,8 +1,8 @@
-const express = require("express");
-const UsersApplication = require("../app/user_app");
+import express from 'express';
+import {login, updatePassword} from '../app/user_app.js';
 const router = express.Router();
 
-router.route("/login").post(UsersApplication.login);
-router.route("/password-update").post(UsersApplication.updatePassword);
+router.route("/login").post(login);
+router.route("/password-update").post(updatePassword);
 
-module.exports = router;
+export default router;

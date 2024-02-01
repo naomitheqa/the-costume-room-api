@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const devConfig = {
+module.exports.devConfig = {
   port: process.env.PORT || 8080,
   mailPort: Number(process.env.MAIL_PORT),
   password: process.env.PASSWORD,
@@ -19,4 +19,3 @@ const devConfig = {
   },
 };
 
-module.exports = devConfig;

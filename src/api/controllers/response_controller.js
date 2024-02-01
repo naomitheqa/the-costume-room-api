@@ -1,4 +1,4 @@
-import { Response } from "../data/classes/response";
+import { Response } from "../data/classes/response.js";
 
 export class ResponseController {
   BadRequest(message, data = {}) {
@@ -45,5 +45,9 @@ export class ResponseController {
   SuccessfulDataFetch(message, data) {
     const success = new Response(200, message, data);
     return success;
+  }
+
+  ServerSideError(message){
+    const err = new Response(500, message)
   }
 }

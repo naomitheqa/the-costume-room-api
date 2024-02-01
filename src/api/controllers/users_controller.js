@@ -1,9 +1,12 @@
-const user_data = require("../data/logic/user_data");
+import userData  from '../data/logic/user_data.js';
+import { Validator } from '../../helpers/validator.js';
+import bcrypt from 'bcrypt';
+import config from '../../../config/env/development.js'; //this is now causing the problem 
+import jwt from 'jsonwebtoken';
+import {} from 'dotenv/config';
 
-const validator = require("../../helpers/validator");
-const bcrypt = require("bcrypt");
-const config = require("../../../config/env");
-const jwt = require("jsonwebtoken");
+// const userData = new UserData();
+const validator = new Validator();
 
 export class UserController {
 
@@ -15,7 +18,7 @@ export class UserController {
   async authenticate(email, password) {
     if (validator.email(email) && validator.password(password)) {
       try {
-        const user = await user_data.selectUserByEmail(email);
+        const user = await userData.selectUserByEmail(email);
 
         if (user == 1) {
           return 1;
@@ -26,11 +29,12 @@ export class UserController {
                 id: user.id,
                 email: user.email,
               },
-              config.jwt_key,
+              process.env.SECRET_KEY,
               {
                 expiresIn: "1h",
               }
             );
+            console.log(token);
             return { token: token, id: user.id };
           } else {
             return 1;
@@ -53,14 +57,15 @@ export class UserController {
   async updatePassword(id, cpassword, npassword) {
     if (validator.password(cpassword) && validator.password(npassword)) {
       try {
-        const user = await user_data.selectUserById(id);
+        const user = await userData.selectUserById(id);
+        console.log(user)
 
         if (user == 1) {
           return 1;
         } else {
           if (bcrypt.compareSync(cpassword, user.password)) {
             const hash = await bcrypt.hash(npassword, 10);
-            const update = await user_data.updatePassword(id, hash);
+            const update = await userData.updatePassword(id, hash);
 
             return update;
           } else {
@@ -83,10 +88,10 @@ export class UserController {
     if (header && header.authorization) {
       const token = header.authorization.split(" ")[1];
       if (token) {
-        const payload = jwt.verify(token, config.jwt_key);
+        const payload = jwt.verify(token, process.env.SECRET_KEY);
         if (payload && payload.id) {
           try {
-            const user = await user_data.selectUserById(payload.id);
+            const user = await userData.selectUserById(payload.id);
             if (user == 1){
               return 1;
             } else {

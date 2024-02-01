@@ -1,12 +1,12 @@
-import { UserController} from "../controllers/users_controller";
-import { ResponseController } from "../controllers/response_controller";
-import { AdminController } from "../controllers/admin_contoller";
+import { UserController } from "../controllers/users_controller.js";
+import { ResponseController } from "../controllers/response_controller.js";
+import { AdminController } from "../controllers/admin_contoller.js";
 
 const userController = new UserController();
 const responseController = new ResponseController();
 const adminController = new AdminController();
 
-module.exports.addAdmin = async function (req, res) {
+export const addAdmin = async function (req, res) {
     const { firstName, lastName, email } = req.body;
     if (!(firstName && lastName && email)){
         res.status(400).json(responseController.BadRequest('Some data has not been provided.'));
@@ -34,16 +34,14 @@ module.exports.addAdmin = async function (req, res) {
     }
 };
 
-module.exports.addUser = async function (req, res) {
+export const addUser = async function (req, res) {
     const { firstName, lastName, email, expiryDate } = req.body;
     if (!(firstName && lastName && email && expiryDate)){
         res.status(400).json(responseController.BadRequest('Some data has not been provided.'));
         return;
     }
-
     try{
         const ans = await userController.validateAccessToken(req.headers);
-
         if (ans.isfound && ans.userType == 'ADMIN'){
             const user = await adminController.createUser(firstName, lastName, email, expiryDate);
             if (user == 0){
@@ -62,7 +60,7 @@ module.exports.addUser = async function (req, res) {
     }
 };
 
-module.exports.getAllAdmins = async function (req, res) {
+export const getAllAdmins = async function (req, res) {
     try {
         const ans = await userController.validateAccessToken(req.headers);
 
@@ -84,7 +82,7 @@ module.exports.getAllAdmins = async function (req, res) {
     }
 };
 
-module.exports.getAllUsers = async function (req, res) {
+export const getAllUsers = async function (req, res) {
     try {
         const ans = await userController.validateAccessToken(req.headers);
 
@@ -106,7 +104,7 @@ module.exports.getAllUsers = async function (req, res) {
     }
 };
 
-module.exports.removeUser = async function (req, res) {
+export const removeUser = async function (req, res) {
     const { id } = req.body;
     if (!id) {
         res.status(400).json(responseController.BadRequest('A user id has not been provided.'));

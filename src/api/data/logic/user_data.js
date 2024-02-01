@@ -1,5 +1,17 @@
-const { user } = require("../../../db/models");
-import { User } from "../classes/user";
+const { user } = require('../../../db/models');
+// const  User = require ("../classes/user.js") ;
+class User {
+  constructor(id, firstName, lastName, email, password, usertype, enableExpiry, expiryDate) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.password = password;
+    this.usertype = usertype;
+    this.enableExpiry = enableExpiry;
+    this.expiryDate = expiryDate;
+  }
+}
 
 module.exports.insertUser = async function (
   firstName,
@@ -9,7 +21,6 @@ module.exports.insertUser = async function (
   usertype,
   enableExpiry,
   expiryDate,
-  isFirstLogin
 ) {
   try {
     const temp = await user.create({
@@ -19,12 +30,11 @@ module.exports.insertUser = async function (
       password: password,
       utype: usertype,
       enableExpiry: enableExpiry,
-      expiryDate: expiryDate,
-      isFirstLogin: isFirstLogin
+      expiryDate: expiryDate
     });
 
     if (temp) {
-      const userObj = new User(
+      return new User(
         temp.dataValues.hashid,
         temp.dataValues.firstName,
         temp.dataValues.lastName,
@@ -33,9 +43,8 @@ module.exports.insertUser = async function (
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
         temp.dataValues.expiryDate,
-        temp.dataValues.isFirstLogin
+        temp.dataValues.loginCount
       );
-      return userObj;
     }
   } catch (err) {
     console.log(
@@ -46,14 +55,16 @@ module.exports.insertUser = async function (
 
 module.exports.selectUserByEmail = async function (email) {
   if (email) {
-    const temp = await user.findOne({
+    try{
+      const temp = await user.findOne({
       where: {
         email: email,
       },
     });
 
+
     if (temp) {
-      const userObj = new User(
+      return new User(
         temp.dataValues.hashid,
         temp.dataValues.firstName,
         temp.dataValues.lastName,
@@ -62,25 +73,28 @@ module.exports.selectUserByEmail = async function (email) {
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
         temp.dataValues.expiryDate,
-        temp.dataValues.isFirstLogin
+        temp.dataValues.loginCount
       );
-      return userObj;
     }
 
+    } catch (err) {
+      console.log(err);
+    }
     return 1;
   }
 };
 
 module.exports.selectUserById = async function (id) {
   if (id) {
-    const temp = await user.findOne({
+    try {
+      const temp = await user.findOne({
       where: {
         hashid: id,
       },
     });
 
     if (temp) {
-      const userObj = new User(
+      return new User(
         temp.dataValues.hashid,
         temp.dataValues.firstName,
         temp.dataValues.lastName,
@@ -89,11 +103,13 @@ module.exports.selectUserById = async function (id) {
         temp.dataValues.utype,
         temp.dataValues.enableExpiry,
         temp.dataValues.expiryDate,
-        temp.dataValues.isFirstLogin
+        temp.dataValues.loginCount
       );
-      return userObj;
     }
-
+    
+    } catch (err) {
+      console.log(err);
+    }
     return 1;
   }
 };
@@ -143,7 +159,7 @@ module.exports.selectAllAdmins = async function (){
         admin.utype,
         admin.enableExpiry,
         admin.expiryDate,
-        admin.isFirstLogin
+        admin.loginCount
       );
 
       admins.push(userObj);
@@ -175,7 +191,7 @@ module.exports.selectAllGeneralUsers = async function (){
         admin.utype,
         admin.enableExpiry,
         admin.expiryDate,
-        admin.isFirstLogin
+        admin.loginCount
       );
 
       generals.push(userObj);
