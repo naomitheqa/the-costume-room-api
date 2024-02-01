@@ -1,4 +1,4 @@
-import { UserController} from "../controllers/users_controller.js";
+import { UserController } from "../controllers/users_controller.js";
 import { ResponseController } from "../controllers/response_controller.js";
 import { AdminController } from "../controllers/admin_contoller.js";
 
@@ -40,10 +40,8 @@ export const addUser = async function (req, res) {
         res.status(400).json(responseController.BadRequest('Some data has not been provided.'));
         return;
     }
-
     try{
         const ans = await userController.validateAccessToken(req.headers);
-
         if (ans.isfound && ans.userType == 'ADMIN'){
             const user = await adminController.createUser(firstName, lastName, email, expiryDate);
             if (user == 0){

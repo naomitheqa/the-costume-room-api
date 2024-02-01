@@ -13,7 +13,6 @@ export const login = async function (req, res) {
     }
     
     try{
-        console.log(email);
         const response = await userController.authenticate(email, password);
         if (response === 0){
             res.status(400).json(responseController.BadRequest('User email or password invalid.'));

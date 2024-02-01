@@ -20,8 +20,6 @@ export class UserController {
       try {
         const user = await userData.selectUserByEmail(email);
 
-        console.log(user)
-
         if (user == 1) {
           return 1;
         } else {
@@ -31,7 +29,7 @@ export class UserController {
                 id: user.id,
                 email: user.email,
               },
-              process.env.SECRET_KEY, //this is undefined. everything works when I replace it with a random str
+              process.env.SECRET_KEY,
               {
                 expiresIn: "1h",
               }
@@ -60,6 +58,7 @@ export class UserController {
     if (validator.password(cpassword) && validator.password(npassword)) {
       try {
         const user = await userData.selectUserById(id);
+        console.log(user)
 
         if (user == 1) {
           return 1;

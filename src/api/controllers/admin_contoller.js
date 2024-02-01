@@ -17,11 +17,11 @@ export class AdminController {
     async createAdmin(firstName, lastName, email){
         if (validator.name(firstName) && validator.name(lastName) && validator.email(email)){
             try{
-                const user = await user_data.selectUserByEmail(email);
+                const user = await userData.selectUserByEmail(email);
 
                 if (user == 1){
                     const hash = await bcrypt.hash('GodFirst1', 10);
-                    const newUser = await user_data.insertUser(firstName, lastName, email, hash, 'ADMIN', false, null, true);
+                    const newUser = await userData.insertUser(firstName, lastName, email, hash, 'ADMIN', false, null, true);
                     return newUser;
                 } else {
                    return 1;
@@ -45,11 +45,11 @@ export class AdminController {
     async createUser(firstName, lastName, email, expiryDate){
         if (validator.name(firstName) && validator.name(lastName) && validator.email(email) && validator.date(expiryDate)){
             try{
-                const user = await user_data.selectUserByEmail(email);
+                const user = await userData.selectUserByEmail(email);
 
                 if (user == 1){
                     const hash = await bcrypt.hash('GodFirst1', 10);
-                    const newUser = await user_data.insertUser(firstName, lastName, email, hash, 'GENERAL', true, expiryDate, true);
+                    const newUser = await userData.insertUser(firstName, lastName, email, hash, 'GENERAL', true, expiryDate, true);
                     return newUser;
                 } else {
                    return 1;
@@ -65,7 +65,7 @@ export class AdminController {
     async listAdmins(){
         var admins = [];
         try {
-            const temp = await user_data.selectAllAdmins();
+            const temp = await userData.selectAllAdmins();
 
             if (temp == 1){
                 return 1;
@@ -91,7 +91,7 @@ export class AdminController {
     async listGeneralUsers(){
         var users = [];
         try {
-            const temp = await user_data.selectAllGeneralUsers();
+            const temp = await userData.selectAllGeneralUsers();
 
             if (temp == 1){
                 return 1;
@@ -129,7 +129,7 @@ export class AdminController {
         return {response: -1, adminId: payload.id};
       } else {
         try{
-          const confirm = await user_data.deleteUser(id);
+          const confirm = await userData.deleteUser(id);
     
           if (confirm == 0){
             return {response: true};

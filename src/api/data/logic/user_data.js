@@ -1,214 +1,5 @@
 const { user } = require('../../../db/models');
-// import { User } from "../classes/user.js" ;
-
-// export class UserData {
-  
-//   async insertUser(
-//     firstName,
-//     lastName,
-//     email,
-//     password,
-//     usertype,
-//     enableExpiry,
-//     expiryDate,
-//     isFirstLogin
-//   ) {
-//     try {
-//       const temp = await user.create({
-//         firstName: firstName,
-//         lastName: lastName,
-//         email: email,
-//         password: password,
-//         utype: usertype,
-//         enableExpiry: enableExpiry,
-//         expiryDate: expiryDate,
-//         isFirstLogin: isFirstLogin
-//       });
-
-//       if (temp) {
-//         const userObj = new User(
-//           temp.dataValues.hashid,
-//           temp.dataValues.firstName,
-//           temp.dataValues.lastName,
-//           temp.dataValues.email,
-//           temp.dataValues.password,
-//           temp.dataValues.utype,
-//           temp.dataValues.enableExpiry,
-//           temp.dataValues.expiryDate,
-//           temp.dataValues.isFirstLogin
-//         );
-//         return userObj;
-//       }
-//     } catch (err) {
-//       console.log(
-//         "Failed to insert user. Please check the data that has been provided..."
-//       );
-//     }
-//   };
-
-//   async selectUserByEmail(email) {
-//     if (email) {
-//       try {
-//         const temp = await user.findOne({
-//           where: {
-//             email: email,
-//           },
-//         });
-//       console.log(temp)
-//       } catch (err) {
-//         console.log(err)
-//       }
-      
-
-//       if (temp) {
-//         const userObj = new User(
-//           temp.dataValues.hashid,
-//           temp.dataValues.firstName,
-//           temp.dataValues.lastName,
-//           temp.dataValues.email,
-//           temp.dataValues.password,
-//           temp.dataValues.utype,
-//           temp.dataValues.enableExpiry,
-//           temp.dataValues.expiryDate,
-//           temp.dataValues.isFirstLogin
-//         );
-//         return userObj;
-//       }
-
-//       return 1;
-//     }
-//   };
-
-//   async selectUserById(id) {
-//     if (id) {
-//       const temp = await user.findOne({
-//         where: {
-//           hashid: id,
-//         },
-//       });
-
-//       if (temp) {
-//         const userObj = new User(
-//           temp.dataValues.hashid,
-//           temp.dataValues.firstName,
-//           temp.dataValues.lastName,
-//           temp.dataValues.email,
-//           temp.dataValues.password,
-//           temp.dataValues.utype,
-//           temp.dataValues.enableExpiry,
-//           temp.dataValues.expiryDate,
-//           temp.dataValues.isFirstLogin
-//         );
-//         return userObj;
-//       }
-
-//       return 1;
-//     }
-//   };
-
-//   async updatePassword(id, password) {
-//     if (id) {
-//       try {
-//         const temp = await user.findOne({
-//           where: {
-//             hashid: id,
-//           },
-//         });
-
-//         await user.update(
-//           { password: password },
-//           {
-//             where: {
-//               hashid: temp.dataValues.hashid,
-//             },
-//           }
-//         );
-
-//         return true;
-//       } catch (err) {
-//         return false;
-//       }
-//     }
-//   };
-
-//   async selectAllAdmins(){
-//     var admins = [];
-//     try {
-//       const temp = await user.findAll({
-//         raw: true,
-//         where: {
-//           utype: 'ADMIN'
-//         }
-//       });
-
-//       temp.forEach(admin => {
-//         let userObj = new User(
-//           admin.hashid,
-//           admin.firstName,
-//           admin.lastName,
-//           admin.email,
-//           admin.password,
-//           admin.utype,
-//           admin.enableExpiry,
-//           admin.expiryDate,
-//           admin.isFirstLogin
-//         );
-
-//         admins.push(userObj);
-//       });
-
-//       return admins;
-//     } catch (err) {
-//       return 1;
-//     }
-//   };
-
-//   async selectAllGeneralUsers(){
-//     var generals = [];
-//     try {
-//       const temp = await user.findAll({
-//         raw: true,
-//         where: {
-//           utype: 'GENERAL'
-//         }
-//       });
-
-//       temp.forEach(admin => {
-//         let userObj = new User(
-//           admin.hashid,
-//           admin.firstName,
-//           admin.lastName,
-//           admin.email,
-//           admin.password,
-//           admin.utype,
-//           admin.enableExpiry,
-//           admin.expiryDate,
-//           admin.isFirstLogin
-//         );
-
-//         generals.push(userObj);
-//       });
-
-//       return generals;
-//     } catch (err) {
-//       return 1;
-//     }
-//   };
-
-//   async deleteUser(id) {
-//     try {
-//       await user.destroy({
-//         where: {
-//           hashid: id
-//         }
-//       });
-//       return 0;
-//     } catch (err) {
-//       return 1;
-//     }
-//   };
-// }
-
+// const  User = require ("../classes/user.js") ;
 class User {
   constructor(id, firstName, lastName, email, password, usertype, enableExpiry, expiryDate) {
     this.id = id;
@@ -218,7 +9,7 @@ class User {
     this.password = password;
     this.usertype = usertype;
     this.enableExpiry = enableExpiry;
-    this.expiryDate = expiryDate;;
+    this.expiryDate = expiryDate;
   }
 }
 
@@ -243,7 +34,7 @@ module.exports.insertUser = async function (
     });
 
     if (temp) {
-      const userObj = new User(
+      return new User(
         temp.dataValues.hashid,
         temp.dataValues.firstName,
         temp.dataValues.lastName,
@@ -254,7 +45,6 @@ module.exports.insertUser = async function (
         temp.dataValues.expiryDate,
         temp.dataValues.loginCount
       );
-      return userObj;
     }
   } catch (err) {
     console.log(
@@ -264,9 +54,7 @@ module.exports.insertUser = async function (
 };
 
 module.exports.selectUserByEmail = async function (email) {
-  console.log(email+3)
   if (email) {
-    console.log(email+77)
     try{
       const temp = await user.findOne({
       where: {
@@ -276,7 +64,7 @@ module.exports.selectUserByEmail = async function (email) {
 
 
     if (temp) {
-      const userObj = new User(
+      return new User(
         temp.dataValues.hashid,
         temp.dataValues.firstName,
         temp.dataValues.lastName,
@@ -287,29 +75,26 @@ module.exports.selectUserByEmail = async function (email) {
         temp.dataValues.expiryDate,
         temp.dataValues.loginCount
       );
-      return userObj;
     }
 
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-
-    
-
     return 1;
   }
 };
 
 module.exports.selectUserById = async function (id) {
   if (id) {
-    const temp = await user.findOne({
+    try {
+      const temp = await user.findOne({
       where: {
         hashid: id,
       },
     });
 
     if (temp) {
-      const userObj = new User(
+      return new User(
         temp.dataValues.hashid,
         temp.dataValues.firstName,
         temp.dataValues.lastName,
@@ -320,9 +105,11 @@ module.exports.selectUserById = async function (id) {
         temp.dataValues.expiryDate,
         temp.dataValues.loginCount
       );
-      return userObj;
     }
-
+    
+    } catch (err) {
+      console.log(err);
+    }
     return 1;
   }
 };
