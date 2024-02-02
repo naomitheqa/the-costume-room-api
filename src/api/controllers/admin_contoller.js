@@ -151,7 +151,7 @@ export class AdminController {
   async deleteUser(id, header) {
     const token = header.authorization.split(" ")[1];
     if (token) {
-      const payload = jwt.verify(token, config.jwt_key);
+      const payload = jwt.verify(token, config.jwt_key); //replace with getting from process.env
       if (id == payload.id) {
         return { response: -1, adminId: payload.id };
       } else {
