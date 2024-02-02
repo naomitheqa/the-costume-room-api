@@ -67,9 +67,9 @@
           }
         },
         "security": [
-            {
-                "JWT": []
-            }
+          {
+            "JWT": []
+          }
         ]
       }
     },
@@ -101,9 +101,9 @@
           }
         },
         "security": [
-            {
-                "JWT": []
-            }
+          {
+            "JWT": []
+          }
         ]
       }
     },
@@ -126,9 +126,9 @@
           }
         },
         "security": [
-            {
-                "JWT": []
-            }
+          {
+            "JWT": []
+          }
         ]
       }
     },
@@ -151,9 +151,9 @@
           }
         },
         "security": [
-            {
-                "JWT": []
-            }
+          {
+            "JWT": []
+          }
         ]
       }
     },
@@ -185,9 +185,9 @@
           }
         },
         "security": [
-            {
-                "JWT": []
-            }
+          {
+            "JWT": []
+          }
         ]
       }
     }
@@ -241,7 +241,8 @@
           "format": "date-time"
         }
       }
-    },"Admin": {
+    },
+    "Admin": {
       "properties": {
         "firstName": {
           "type": "string"
@@ -265,7 +266,7 @@
       }
     },
     "UpdatePassword": {
-        "properties": {
+      "properties": {
         "userId": {
           "type": "string"
         },
@@ -280,11 +281,11 @@
   },
   "components": {
     "securitySchemes": {
-        "JWT": {
-            "type": "apiKey",
-            "in": "header",
-            "name": "Authorization" 
-        }           
-    } 
+      "JWT": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
   }
 }
