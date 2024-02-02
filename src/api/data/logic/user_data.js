@@ -114,7 +114,7 @@ module.exports.selectUserById = async function (id) {
         );
       }
     } catch (err) {
-      console.log(err);
+      console.log(`Failed to find user due to the following error ${err}`);
     }
     return 1;
   }
