@@ -29,14 +29,12 @@ export const login = async function (req, res) {
           responseController.NotFound("User with given credentials not found.")
         );
     } else {
-      res
-        .status(200)
-        .json(
-          responseController.LoginSuccess("Login successful.", {
-            token: `JWT ${response.token}`,
-            userId: response.id,
-          })
-        );
+      res.status(200).json(
+        responseController.LoginSuccess("Login successful.", {
+          token: `JWT ${response.token}`,
+          userId: response.id,
+        })
+      );
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));

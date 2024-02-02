@@ -146,7 +146,7 @@ module.exports.updatePassword = async function (id, password) {
 };
 
 module.exports.selectAllAdmins = async function () {
-  var admins = [];
+  let admins = [];
   try {
     const temp = await user.findAll({
       raw: true,
@@ -178,7 +178,7 @@ module.exports.selectAllAdmins = async function () {
 };
 
 module.exports.selectAllGeneralUsers = async function () {
-  var generals = [];
+  let generals = [];
   try {
     const temp = await user.findAll({
       raw: true,

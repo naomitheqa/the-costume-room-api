@@ -49,5 +49,6 @@ export class ResponseController {
 
   ServerSideError(message) {
     const err = new Response(500, message);
+    return err;
   }
 }

@@ -43,18 +43,16 @@ export const addAdmin = async function (req, res) {
             )
           );
       } else {
-        res
-          .status(201)
-          .json(
-            responseController.UserCreated(
-              "Admin with listed details has been created.",
-              {
-                id: user.hashid,
-                name: `${user.firstName} ${user.lastName}`,
-                email: user.email,
-              }
-            )
-          );
+        res.status(201).json(
+          responseController.UserCreated(
+            "Admin with listed details has been created.",
+            {
+              id: user.hashid,
+              name: `${user.firstName} ${user.lastName}`,
+              email: user.email,
+            }
+          )
+        );
       }
     } else {
       res.status(401).json(responseController.Unauthorized("Unauthorized."));
@@ -83,19 +81,17 @@ export const addUser = async function (req, res) {
         expiryDate
       );
       if (user == 0) {
-        res
-          .status(400)
-          .json(
-            responseController.BadRequest(
-              "Data provided for new user is invalid.",
-              {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                expiryDate: expiryDate,
-              }
-            )
-          );
+        res.status(400).json(
+          responseController.BadRequest(
+            "Data provided for new user is invalid.",
+            {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              expiryDate: expiryDate,
+            }
+          )
+        );
       } else if (user === 1) {
         res
           .status(409)
@@ -106,19 +102,17 @@ export const addUser = async function (req, res) {
             )
           );
       } else {
-        res
-          .status(201)
-          .json(
-            responseController.UserCreated(
-              "User with listed details has been created.",
-              {
-                id: user.id,
-                name: `${user.firstName} ${user.lastName}`,
-                email: user.email,
-                expiryDate: user.expiryDate,
-              }
-            )
-          );
+        res.status(201).json(
+          responseController.UserCreated(
+            "User with listed details has been created.",
+            {
+              id: user.id,
+              name: `${user.firstName} ${user.lastName}`,
+              email: user.email,
+              expiryDate: user.expiryDate,
+            }
+          )
+        );
       }
     } else {
       res.status(401).json(responseController.Unauthorized("Unauthorized."));
@@ -215,14 +209,12 @@ export const removeUser = async function (req, res) {
       const confirm = await adminController.deleteUser(id, req.headers);
 
       if (confirm.response == -1) {
-        res
-          .status(400)
-          .json(
-            responseController.BadRequest("Cannot perform self delete.", {
-              userId: id,
-              adminId: confirm.adminId,
-            })
-          );
+        res.status(400).json(
+          responseController.BadRequest("Cannot perform self delete.", {
+            userId: id,
+            adminId: confirm.adminId,
+          })
+        );
       } else if (confirm.response == false) {
         res
           .status(500)

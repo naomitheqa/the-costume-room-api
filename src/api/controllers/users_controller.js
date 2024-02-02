@@ -1,7 +1,6 @@
 import userData from "../data/logic/user_data.js";
 import { Validator } from "../../helpers/validator.js";
 import bcrypt from "bcrypt";
-import config from "../../../config/env/development.js"; //this is now causing the problem
 import jwt from "jsonwebtoken";
 import {} from "dotenv/config";
 
@@ -19,7 +18,7 @@ export class UserController {
       try {
         const user = await userData.selectUserByEmail(email);
 
-        if (user == 1) {
+        if (user === 1) {
           return 1;
         } else {
           if (bcrypt.compareSync(password, user.password)) {
@@ -59,7 +58,7 @@ export class UserController {
         const user = await userData.selectUserById(id);
         console.log(user);
 
-        if (user == 1) {
+        if (user === 1) {
           return 1;
         } else {
           if (bcrypt.compareSync(cpassword, user.password)) {
@@ -91,7 +90,7 @@ export class UserController {
         if (payload && payload.id) {
           try {
             const user = await userData.selectUserById(payload.id);
-            if (user == 1) {
+            if (user === 1) {
               return 1;
             } else {
               return { isfound: true, userType: user.usertype };
