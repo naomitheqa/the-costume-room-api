@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 module.exports.prodConfig = {
-  port: process.env.PORT || 8080,
+  port: process.env.PORT || 5432,
   mailPort: Number(process.env.MAIL_PORT),
   password: process.env.MAIL_PASSWORD,
   email: process.env.MAIL_EMAIL,
