@@ -20,7 +20,7 @@ app.get("/", (req, res, next) => {
   res.json({ message: "Welcome to The Costume Room API..." });
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Server is running`);
 });
 
