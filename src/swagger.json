@@ -1,0 +1,290 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "The Costume Room",
+    "version": "v1"
+  },
+  "schemes": ["http", "https"],
+  "host": "thecostumeroomapi.cyclic.app/",
+  "basePath": "/tcr",
+  "tags": [{ "name": "General" }],
+
+  "paths": {
+    "/tcr/users/login": {
+      "post": {
+        "tags": ["General"],
+        "summary": "Allows users to login",
+        "operationId": "login",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Auth"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "User email or password not provided."
+          },
+          "404": {
+            "description": "User with given credentials not found."
+          },
+          "200": {
+            "description": "Login successful."
+          }
+        }
+      }
+    },
+    "/tcr/admin/add-user": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Add a general user",
+        "operationId": "add-user",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/General"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Data provided for new admin is invalid."
+          },
+          "409": {
+            "description": "User with listed email already exists."
+          },
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+            {
+                "JWT": []
+            }
+        ]
+      }
+    },
+    "/tcr/admin/add-admin": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Add an admin user",
+        "operationId": "add-admin",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Data provided for new admin is invalid."
+          },
+          "409": {
+            "description": "User with listed email already exists."
+          },
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+            {
+                "JWT": []
+            }
+        ]
+      }
+    },
+    "/tcr/admin/admins": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get all admin users",
+        "operationId": "get-admins",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "responses": {
+          "400": {
+            "description": "Data provided for new admin is invalid."
+          },
+          "409": {
+            "description": "User with listed email already exists."
+          },
+          "200": {
+            "description": "Created"
+          }
+        },
+        "security": [
+            {
+                "JWT": []
+            }
+        ]
+      }
+    },
+    "/tcr/admin/users": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get all general users",
+        "operationId": "get-users",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "responses": {
+          "400": {
+            "description": "Data provided for new admin is invalid."
+          },
+          "409": {
+            "description": "User with listed email already exists."
+          },
+          "200": {
+            "description": "Created"
+          }
+        },
+        "security": [
+            {
+                "JWT": []
+            }
+        ]
+      }
+    },
+    "/tcr/users/password-update": {
+      "post": {
+        "tags": ["General"],
+        "summary": "Allows users to update their passwords",
+        "operationId": "update-password",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/UpdatePassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "User email or password not provided."
+          },
+          "404": {
+            "description": "User with given credentials not found."
+          },
+          "204": {
+            "description": "Update successful."
+          }
+        },
+        "security": [
+            {
+                "JWT": []
+            }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "usertype": {
+          "type": "string",
+          "enum": ["GENERAL", "ADMIN"]
+        },
+        "enableExpiry": {
+          "type": "boolean",
+          "default": "false"
+        },
+        "expiryDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "General": {
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "expiryDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },"Admin": {
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "Auth": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdatePassword": {
+        "properties": {
+        "userId": {
+          "type": "string"
+        },
+        "cpassword": {
+          "type": "string"
+        },
+        "npassword": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+        "JWT": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "Authorization" 
+        }           
+    } 
+  }
+}
