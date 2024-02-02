@@ -3,9 +3,11 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
+import swaggerUi from "swagger-ui-express";
 
 import users from "./api/routes/users_routes.js";
 import admin from "./api/routes/admin_routes.js";
+import swaggerDocument from "./swagger.json" assert { type: "json" };
 // import config from '../config/dev.env';
 
 const app = express();
@@ -15,6 +17,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/tcr/users", users);
 app.use("/tcr/admin", admin);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("/", (req, res, next) => {
   res.json({ message: "Welcome to The Costume Room API..." });
