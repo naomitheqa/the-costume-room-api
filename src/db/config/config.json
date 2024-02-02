@@ -7,12 +7,10 @@
     "dialect": "postgres"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres",
-    "dialectOptions": {
-      "ssl": {
-        "rejectUnauthorized": false
-      }
-    }
+    "username": "postgres.xyaxykrafxtoprlfgeta",
+    "password": "VixCv@yuMb2jGb",
+    "database": "postgres",
+    "host": "aws-0-us-east-1.pooler.supabase.com",
+    "dialect": "postgres"
   }
 }
