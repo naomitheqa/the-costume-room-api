@@ -47,7 +47,7 @@ export class ResponseController {
     return success;
   }
 
-  ServerSideError(message){
-    const err = new Response(500, message)
+  ServerSideError(message) {
+    const err = new Response(500, message);
   }
 }

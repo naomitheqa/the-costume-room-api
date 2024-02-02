@@ -1,19 +1,18 @@
-import userData  from '../data/logic/user_data.js';
-import { Validator } from '../../helpers/validator.js';
-import bcrypt from 'bcrypt';
-import config from '../../../config/env/development.js'; //this is now causing the problem 
-import jwt from 'jsonwebtoken';
-import {} from 'dotenv/config';
+import userData from "../data/logic/user_data.js";
+import { Validator } from "../../helpers/validator.js";
+import bcrypt from "bcrypt";
+import config from "../../../config/env/development.js"; //this is now causing the problem
+import jwt from "jsonwebtoken";
+import {} from "dotenv/config";
 
 // const userData = new UserData();
 const validator = new Validator();
 
 export class UserController {
-
   /**
    * Authenticates user for use of the API
-   * @param {String} email 
-   * @param {String} password 
+   * @param {String} email
+   * @param {String} password
    */
   async authenticate(email, password) {
     if (validator.email(email) && validator.password(password)) {
@@ -50,7 +49,7 @@ export class UserController {
 
   /**
    * Allows for a user to update their password once authenticated.
-   * @param {UUID} id 
+   * @param {UUID} id
    * @param {String} cpassword - The user's current password
    * @param {String} npassword - The password that the user wants to change to
    */
@@ -58,7 +57,7 @@ export class UserController {
     if (validator.password(cpassword) && validator.password(npassword)) {
       try {
         const user = await userData.selectUserById(id);
-        console.log(user)
+        console.log(user);
 
         if (user == 1) {
           return 1;
@@ -82,7 +81,7 @@ export class UserController {
 
   /**
    * Assess whether or not a provided header contains a valid JWT token
-   * @param {Object} header 
+   * @param {Object} header
    */
   async validateAccessToken(header) {
     if (header && header.authorization) {
@@ -92,10 +91,10 @@ export class UserController {
         if (payload && payload.id) {
           try {
             const user = await userData.selectUserById(payload.id);
-            if (user == 1){
+            if (user == 1) {
               return 1;
             } else {
-              return { isfound: true, userType:user.usertype };
+              return { isfound: true, userType: user.usertype };
             }
           } catch (err) {
             return err;

@@ -10,9 +10,14 @@ const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
 // const sequelize = new Sequelize(config.dbConnectionString, config.dbOptions);
 
-const sequelize = new Sequelize('costumeroom', 'postgres', process.env.PASSWORD, {
-  dialect: 'postgres'
-});
+const sequelize = new Sequelize(
+  "costumeroom",
+  "postgres",
+  process.env.PASSWORD,
+  {
+    dialect: "postgres",
+  }
+);
 
 // let sequelize;
 // if (config.use_env_variable) {

@@ -1,5 +1,14 @@
 export default class User {
-  constructor(id, firstName, lastName, email, password, usertype, enableExpiry, expiryDate) {
+  constructor(
+    id,
+    firstName,
+    lastName,
+    email,
+    password,
+    usertype,
+    enableExpiry,
+    expiryDate
+  ) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

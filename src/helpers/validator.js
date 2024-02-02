@@ -69,11 +69,11 @@ function onlySpaces(str) {
 
 export class Validator {
   /**
- * Title server side validation
- * @version 1.0
- * @author Spark-Inc
- * @return {Boolean}
- */
+   * Title server side validation
+   * @version 1.0
+   * @author Spark-Inc
+   * @return {Boolean}
+   */
   valAlphanumeric = function (val) {
     if (
       val === null ||

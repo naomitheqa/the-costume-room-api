@@ -4,8 +4,8 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import "dotenv/config";
 
-import users from './api/routes/users_routes.js';
-import admin from './api/routes/admin_routes.js';
+import users from "./api/routes/users_routes.js";
+import admin from "./api/routes/admin_routes.js";
 // import config from '../config/dev.env';
 
 const app = express();
@@ -23,6 +23,5 @@ app.get("/", (req, res, next) => {
 app.listen(8080, () => {
   console.log(`Server is running`);
 });
-
 
 export default app;

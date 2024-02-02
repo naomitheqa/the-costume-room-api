@@ -1,5 +1,11 @@
-import express from 'express';
-import {addAdmin, addUser, getAllAdmins, getAllUsers, removeUser} from '../app/admin_app.js';
+import express from "express";
+import {
+  addAdmin,
+  addUser,
+  getAllAdmins,
+  getAllUsers,
+  removeUser,
+} from "../app/admin_app.js";
 const router = express.Router();
 
 router.route("/add-admin").post(addAdmin);

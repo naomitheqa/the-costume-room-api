@@ -1,7 +1,16 @@
-const { user } = require('../../../db/models');
+const { user } = require("../../../db/models");
 // const  User = require ("../classes/user.js") ;
 class User {
-  constructor(id, firstName, lastName, email, password, usertype, enableExpiry, expiryDate) {
+  constructor(
+    id,
+    firstName,
+    lastName,
+    email,
+    password,
+    usertype,
+    enableExpiry,
+    expiryDate
+  ) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -20,7 +29,7 @@ module.exports.insertUser = async function (
   password,
   usertype,
   enableExpiry,
-  expiryDate,
+  expiryDate
 ) {
   try {
     const temp = await user.create({
@@ -30,7 +39,7 @@ module.exports.insertUser = async function (
       password: password,
       utype: usertype,
       enableExpiry: enableExpiry,
-      expiryDate: expiryDate
+      expiryDate: expiryDate,
     });
 
     if (temp) {
@@ -55,28 +64,26 @@ module.exports.insertUser = async function (
 
 module.exports.selectUserByEmail = async function (email) {
   if (email) {
-    try{
+    try {
       const temp = await user.findOne({
-      where: {
-        email: email,
-      },
-    });
+        where: {
+          email: email,
+        },
+      });
 
-
-    if (temp) {
-      return new User(
-        temp.dataValues.hashid,
-        temp.dataValues.firstName,
-        temp.dataValues.lastName,
-        temp.dataValues.email,
-        temp.dataValues.password,
-        temp.dataValues.utype,
-        temp.dataValues.enableExpiry,
-        temp.dataValues.expiryDate,
-        temp.dataValues.loginCount
-      );
-    }
-
+      if (temp) {
+        return new User(
+          temp.dataValues.hashid,
+          temp.dataValues.firstName,
+          temp.dataValues.lastName,
+          temp.dataValues.email,
+          temp.dataValues.password,
+          temp.dataValues.utype,
+          temp.dataValues.enableExpiry,
+          temp.dataValues.expiryDate,
+          temp.dataValues.loginCount
+        );
+      }
     } catch (err) {
       console.log(err);
     }
@@ -88,25 +95,24 @@ module.exports.selectUserById = async function (id) {
   if (id) {
     try {
       const temp = await user.findOne({
-      where: {
-        hashid: id,
-      },
-    });
+        where: {
+          hashid: id,
+        },
+      });
 
-    if (temp) {
-      return new User(
-        temp.dataValues.hashid,
-        temp.dataValues.firstName,
-        temp.dataValues.lastName,
-        temp.dataValues.email,
-        temp.dataValues.password,
-        temp.dataValues.utype,
-        temp.dataValues.enableExpiry,
-        temp.dataValues.expiryDate,
-        temp.dataValues.loginCount
-      );
-    }
-    
+      if (temp) {
+        return new User(
+          temp.dataValues.hashid,
+          temp.dataValues.firstName,
+          temp.dataValues.lastName,
+          temp.dataValues.email,
+          temp.dataValues.password,
+          temp.dataValues.utype,
+          temp.dataValues.enableExpiry,
+          temp.dataValues.expiryDate,
+          temp.dataValues.loginCount
+        );
+      }
     } catch (err) {
       console.log(err);
     }
@@ -139,17 +145,17 @@ module.exports.updatePassword = async function (id, password) {
   }
 };
 
-module.exports.selectAllAdmins = async function (){
+module.exports.selectAllAdmins = async function () {
   var admins = [];
   try {
     const temp = await user.findAll({
       raw: true,
       where: {
-        utype: 'ADMIN'
-      }
+        utype: "ADMIN",
+      },
     });
 
-    temp.forEach(admin => {
+    temp.forEach((admin) => {
       let userObj = new User(
         admin.hashid,
         admin.firstName,
@@ -171,17 +177,17 @@ module.exports.selectAllAdmins = async function (){
   }
 };
 
-module.exports.selectAllGeneralUsers = async function (){
+module.exports.selectAllGeneralUsers = async function () {
   var generals = [];
   try {
     const temp = await user.findAll({
       raw: true,
       where: {
-        utype: 'GENERAL'
-      }
+        utype: "GENERAL",
+      },
     });
 
-    temp.forEach(admin => {
+    temp.forEach((admin) => {
       let userObj = new User(
         admin.hashid,
         admin.firstName,
@@ -207,11 +213,11 @@ module.exports.deleteUser = async function (id) {
   try {
     await user.destroy({
       where: {
-        hashid: id
-      }
+        hashid: id,
+      },
     });
     return 0;
   } catch (err) {
     return 1;
   }
-}
+};

@@ -40,16 +40,16 @@ module.exports = {
       enableExpiry: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: false
+        defaultValue: false,
       },
       expiryDate: {
         type: Sequelize.DATEONLY,
-        allowNull: true
+        allowNull: true,
       },
       loginCount: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 0,
       },
       createdAt: {
         allowNull: false,

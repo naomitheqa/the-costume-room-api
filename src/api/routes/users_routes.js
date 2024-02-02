@@ -1,5 +1,5 @@
-import express from 'express';
-import {login, updatePassword} from '../app/user_app.js';
+import express from "express";
+import { login, updatePassword } from "../app/user_app.js";
 const router = express.Router();
 
 router.route("/login").post(login);
