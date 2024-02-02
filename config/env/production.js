@@ -2,7 +2,7 @@ require("dotenv").config();
 
 module.exports.prodConfig = {
   port: process.env.PORT || 5432,
-  //mailPort: Number(process.env.MAIL_PORT),
+  mailPort: Number(process.env.MAIL_PORT),
   password: process.env.PASSWORD,
   email: process.env.MAIL_EMAIL,
   jwt_key: process.env.SECRET_KEY,
@@ -13,7 +13,7 @@ module.exports.prodConfig = {
       max: 10,
       min: 0,
       acquire: 30000,
-      idle: 10000,
+      idle: 20000,
     },
     dialect: "postgres",
     dialectOptions: {
