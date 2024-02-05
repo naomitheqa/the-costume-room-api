@@ -241,7 +241,8 @@
           "format": "date-time"
         }
       }
-    },"Admin": {
+    },
+    "Admin": {
       "properties": {
         "firstName": {
           "type": "string"
