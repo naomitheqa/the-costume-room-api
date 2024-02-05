@@ -1,9 +1,9 @@
+/* eslint-disable class-methods-use-this */
 import { Response } from "../data/classes/response.js";
 
 export class ResponseController {
   BadRequest(message, data = {}) {
-    const err = new Response(400, message, data);
-    return err;
+    return new Response(400, message, data);
   }
 
   LoginSuccess(message, data) {
@@ -13,42 +13,34 @@ export class ResponseController {
   }
 
   NotFound(message, data = {}) {
-    const err = new Response(404, message, data);
-    return err;
+    return new Response(404, message, data);
   }
 
   SuccessfulNoContent() {
-    const success = new Response(204);
-    return success;
+    return new Response(204);
   }
 
   Unauthorized(message, data) {
-    const err = new Response(401, message, (data = "N/A"));
-    return err;
+    return new Response(401, message, (data = "N/A"));
   }
 
   UserCreated(message, data) {
-    const success = new Response(201, message, data);
-    return success;
+    return new Response(201, message, data);
   }
 
   CausingDuplicate(message, data) {
-    const err = new Response(409, message, data);
-    return err;
+    return new Response(409, message, data);
   }
 
   CouldNotCompleteRequest(message, data) {
-    const err = new Response(500, message, data);
-    return err;
+    return new Response(500, message, data);
   }
 
   SuccessfulDataFetch(message, data) {
-    const success = new Response(200, message, data);
-    return success;
+    return new Response(200, message, data);
   }
 
   ServerSideError(message) {
-    const err = new Response(500, message);
-    return err;
+    return new Response(500, message);
   }
 }

@@ -28,13 +28,12 @@ function isValidDate(dateString) {
  * @returns {DateString}
  */
 function getToday() {
-  var temp = new Date().toLocaleDateString("zh-Hans-CN", {
+  const temp = new Date().toLocaleDateString("zh-Hans-CN", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
   });
-  const today = temp.split("/").join("-");
-  return today;
+  return temp.split("/").join("-");
 }
 
 /**

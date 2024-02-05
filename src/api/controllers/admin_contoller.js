@@ -1,7 +1,6 @@
 import userData from "../data/logic/user_data.js";
 import { Validator } from "../../helpers/validator.js";
 import bcrypt from "bcrypt";
-import config from "../../../config/env/index.js";
 import jwt from "jsonwebtoken";
 
 // const userData = new UserData();
@@ -9,7 +8,7 @@ const validator = new Validator();
 
 export class AdminController {
   /**
-   * Allows an admib to create and add another admin
+   * Allows an admin to create and add another admin
    * @param {String} firstName
    * @param {String} lastName
    * @param {String} email
@@ -23,9 +22,9 @@ export class AdminController {
       try {
         const user = await userData.selectUserByEmail(email);
 
-        if (user == 1) {
+        if (user === 1) {
           const hash = await bcrypt.hash("GodFirst1", 10);
-          const newUser = await userData.insertUser(
+          return await userData.insertUser(
             firstName,
             lastName,
             email,
@@ -35,7 +34,6 @@ export class AdminController {
             null,
             true
           );
-          return newUser;
         } else {
           return 1;
         }
@@ -65,9 +63,9 @@ export class AdminController {
       try {
         const user = await userData.selectUserByEmail(email);
 
-        if (user == 1) {
+        if (user === 1) {
           const hash = await bcrypt.hash("GodFirst1", 10);
-          const newUser = await userData.insertUser(
+          return await userData.insertUser(
             firstName,
             lastName,
             email,
@@ -77,7 +75,6 @@ export class AdminController {
             expiryDate,
             true
           );
-          return newUser;
         } else {
           return 1;
         }
@@ -90,15 +87,15 @@ export class AdminController {
   }
 
   async listAdmins() {
-    var admins = [];
+    const admins = [];
     try {
       const temp = await userData.selectAllAdmins();
 
-      if (temp == 1) {
+      if (temp === 1) {
         return 1;
       } else {
         temp.forEach((admin) => {
-          let tempUser = {
+          const tempUser = {
             id: admin.id,
             firstName: admin.firstName,
             lastName: admin.lastName,
@@ -116,15 +113,15 @@ export class AdminController {
   }
 
   async listGeneralUsers() {
-    var users = [];
+    const users = [];
     try {
       const temp = await userData.selectAllGeneralUsers();
 
-      if (temp == 1) {
+      if (temp === 1) {
         return 1;
       } else {
         temp.forEach((user) => {
-          let tempUser = {
+          const tempUser = {
             id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
@@ -146,19 +143,20 @@ export class AdminController {
   /**
    * Allows a user (an admin) to delete another user
    * @param {*} id
+   * @param {String} header
    * @returns
    */
   async deleteUser(id, header) {
     const token = header.authorization.split(" ")[1];
     if (token) {
-      const payload = jwt.verify(token, config.jwt_key); //replace with getting from process.env
-      if (id == payload.id) {
+      const payload = jwt.verify(token, process.env.SECRET_KEY);
+      if (id === payload.id) {
         return { response: -1, adminId: payload.id };
       } else {
         try {
           const confirm = await userData.deleteUser(id);
 
-          if (confirm == 0) {
+          if (confirm === 0) {
             return { response: true };
           } else {
             return { response: false };

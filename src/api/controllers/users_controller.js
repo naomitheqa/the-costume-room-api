@@ -2,7 +2,6 @@ import userData from "../data/logic/user_data.js";
 import { Validator } from "../../helpers/validator.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import {} from "dotenv/config";
 
 // const userData = new UserData();
 const validator = new Validator();
@@ -63,9 +62,7 @@ export class UserController {
         } else {
           if (bcrypt.compareSync(cpassword, user.password)) {
             const hash = await bcrypt.hash(npassword, 10);
-            const update = await userData.updatePassword(id, hash);
-
-            return update;
+            return await userData.updatePassword(id, hash);
           } else {
             return -1;
           }
