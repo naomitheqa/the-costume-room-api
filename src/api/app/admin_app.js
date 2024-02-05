@@ -18,13 +18,13 @@ export const addAdmin = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType == "ADMIN") {
+    if (ans.isfound && ans.userType === "ADMIN") {
       const user = await adminController.createAdmin(
         firstName,
         lastName,
         email
       );
-      if (user == 0) {
+      if (user === 0) {
         res
           .status(400)
           .json(
@@ -73,14 +73,14 @@ export const addUser = async function (req, res) {
   }
   try {
     const ans = await userController.validateAccessToken(req.headers);
-    if (ans.isfound && ans.userType == "ADMIN") {
+    if (ans.isfound && ans.userType === "ADMIN") {
       const user = await adminController.createUser(
         firstName,
         lastName,
         email,
         expiryDate
       );
-      if (user == 0) {
+      if (user === 0) {
         res.status(400).json(
           responseController.BadRequest(
             "Data provided for new user is invalid.",
@@ -127,10 +127,10 @@ export const getAllAdmins = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType == "ADMIN") {
+    if (ans.isfound && ans.userType === "ADMIN") {
       const admins = await adminController.listAdmins();
 
-      if (admins == 1) {
+      if (admins === 1) {
         res
           .status(500)
           .json(
@@ -162,10 +162,10 @@ export const getAllUsers = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType == "ADMIN") {
+    if (ans.isfound && ans.userType === "ADMIN") {
       const users = await adminController.listGeneralUsers();
 
-      if (users == 1) {
+      if (users === 1) {
         res
           .status(500)
           .json(
@@ -205,17 +205,17 @@ export const removeUser = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType == "ADMIN") {
+    if (ans.isfound && ans.userType === "ADMIN") {
       const confirm = await adminController.deleteUser(id, req.headers);
 
-      if (confirm.response == -1) {
+      if (confirm.response === -1) {
         res.status(400).json(
           responseController.BadRequest("Cannot perform self delete.", {
             userId: id,
             adminId: confirm.adminId,
           })
         );
-      } else if (confirm.response == false) {
+      } else if (confirm.response === false) {
         res
           .status(500)
           .json(
@@ -224,7 +224,7 @@ export const removeUser = async function (req, res) {
               { userId: id }
             )
           );
-      } else if (confirm.response == true) {
+      } else if (confirm.response === true) {
         res.status(204).json(responseController.SuccessfulNoContent());
       } else {
         res
