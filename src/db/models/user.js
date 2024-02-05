@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
