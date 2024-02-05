@@ -1,5 +1,4 @@
 const { user } = require("../../../db/models");
-// const  User = require ("../classes/user.js") ;
 class User {
   constructor(
     id,
@@ -146,7 +145,7 @@ module.exports.updatePassword = async function (id, password) {
 };
 
 module.exports.selectAllAdmins = async function () {
-  let admins = [];
+  const admins = [];
   try {
     const temp = await user.findAll({
       raw: true,
@@ -156,7 +155,7 @@ module.exports.selectAllAdmins = async function () {
     });
 
     temp.forEach((admin) => {
-      let userObj = new User(
+      const userObj = new User(
         admin.hashid,
         admin.firstName,
         admin.lastName,
@@ -178,7 +177,7 @@ module.exports.selectAllAdmins = async function () {
 };
 
 module.exports.selectAllGeneralUsers = async function () {
-  let generals = [];
+  const generals = [];
   try {
     const temp = await user.findAll({
       raw: true,
@@ -188,7 +187,7 @@ module.exports.selectAllGeneralUsers = async function () {
     });
 
     temp.forEach((admin) => {
-      let userObj = new User(
+      const userObj = new User(
         admin.hashid,
         admin.firstName,
         admin.lastName,
