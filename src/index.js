@@ -7,8 +7,12 @@ import swaggerUi from "swagger-ui-express";
 
 import users from "./api/routes/users_routes.js";
 import admin from "./api/routes/admin_routes.js";
-import swaggerDocument from "./swagger.json" assert { type: "json" };
-// import config from '../config/dev.env';
+// import swaggerDocument from "./swagger.json" assert { type: "json" };
+
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const swaggerDocument = require("./swagger.json");
 
 const app = express();
 
