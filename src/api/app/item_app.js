@@ -27,19 +27,17 @@ export const addItem = async function (req, res) {
       );
 
       if (item === 0) {
-        res
-          .status(400)
-          .json(
-            responseController.BadRequest(
-              "Data provided for new admin is invalid.",
-              {
-                name: name,
-                description: description,
-                count: count,
-                group: group,
-              }
-            )
-          );
+        res.status(400).json(
+          responseController.BadRequest(
+            "Data provided for new admin is invalid.",
+            {
+              name: name,
+              description: description,
+              count: count,
+              group: group,
+            }
+          )
+        );
       } else if (item === 1) {
         res
           .status(409)

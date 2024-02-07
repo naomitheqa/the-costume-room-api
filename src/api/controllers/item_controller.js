@@ -14,7 +14,7 @@ export class ItemController {
       try {
         const item = await itemData.selectItemByName(name);
 
-        if (name === 1) {
+        if (item === 1) {
           return await itemData.insertItem(
             name,
             description,
