@@ -1,6 +1,6 @@
 import { UserController } from "../controllers/users_controller.js";
 import { ResponseController } from "../controllers/response_controller.js";
-import { AdminController } from "../controllers/admin_contoller.js";
+import { AdminController } from "../controllers/admin_controller.js";
 
 const userController = new UserController();
 const responseController = new ResponseController();
@@ -42,6 +42,8 @@ export const addAdmin = async function (req, res) {
               { email: email }
             )
           );
+      } else if (user === 2) {
+        res.status(500).json(responseController.CouldNotCompleteRequest("Could not create user due to server side error. Please contact your administrator.", {}))
       } else {
         res.status(201).json(
           responseController.UserCreated(

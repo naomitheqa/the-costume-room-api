@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      staus: {
+      status: {
         type: Sequelize.ENUM("OUT", "IN"),
         allowNull: false,
       },

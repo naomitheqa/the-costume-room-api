@@ -4,6 +4,7 @@ const pwrd = /^[A-Za-z0-9_@./#$%&+-]*$/;
 const title = /^(?!^\d*$)[a-zA-Z\d\s]*$/;
 const gname = /^[a-z ,.'-]+$/i;
 const emailR = /.{1,}@[^.]{1,}/;
+const desc = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
 
 // Helpers
 /**
@@ -93,6 +94,31 @@ export class Validator {
       }
     }
   };
+
+  /**
+   * 
+   * @param {*} val 
+   * @returns 
+   */
+  description = function (val) {
+    if (
+      val === null ||
+      val === "" ||
+      val === undefined ||
+      isBoolean(val) ||
+      isFloat(val) ||
+      onlySpaces(val) ||
+      typeof val === "object"
+    ) {
+      return false;
+    } else {
+      if (!val.match(desc)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 
   /**
    * Name server side validation

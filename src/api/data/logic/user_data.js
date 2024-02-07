@@ -53,6 +53,8 @@ module.exports.insertUser = async function (
         temp.dataValues.expiryDate,
         temp.dataValues.loginCount
       );
+    } else {
+      return 2;
     }
   } catch (err) {
     console.log(
