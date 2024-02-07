@@ -317,7 +317,7 @@
     },
     "Item": {
       "properties": {
-        "name" : {
+        "name": {
           "type": "string"
         },
         "description": {

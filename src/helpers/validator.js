@@ -96,9 +96,9 @@ export class Validator {
   };
 
   /**
-   * 
-   * @param {*} val 
-   * @returns 
+   *
+   * @param {*} val
+   * @returns
    */
   description = function (val) {
     if (
@@ -118,7 +118,7 @@ export class Validator {
         return true;
       }
     }
-  }
+  };
 
   /**
    * Name server side validation

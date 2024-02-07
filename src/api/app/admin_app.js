@@ -43,7 +43,14 @@ export const addAdmin = async function (req, res) {
             )
           );
       } else if (user === 2) {
-        res.status(500).json(responseController.CouldNotCompleteRequest("Could not create user due to server side error. Please contact your administrator.", {}))
+        res
+          .status(500)
+          .json(
+            responseController.CouldNotCompleteRequest(
+              "Could not create user due to server side error. Please contact your administrator.",
+              {}
+            )
+          );
       } else {
         res.status(201).json(
           responseController.UserCreated(

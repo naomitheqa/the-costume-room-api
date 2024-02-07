@@ -1,5 +1,5 @@
 export const Group = {
-    Seniors: "SENIORS",
-    Teens: "TEENS",
-    Juniors: "JUNIORS"
-}
+  Seniors: "SENIORS",
+  Teens: "TEENS",
+  Juniors: "JUNIORS",
+};
