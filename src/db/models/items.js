@@ -17,6 +17,12 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      hashid: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        unique: true,
+        defaultValue: DataTypes.UUIDV4,
+      },
       name: DataTypes.STRING,
       description: DataTypes.STRING,
       count: DataTypes.INTEGER,

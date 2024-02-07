@@ -7,6 +7,7 @@ import swaggerUi from "swagger-ui-express";
 import { createRequire } from "module";
 import users from "./api/routes/users_routes.js";
 import admin from "./api/routes/admin_routes.js";
+import items from "./api/routes/item_routes.js";
 
 const require = createRequire(import.meta.url);
 const swaggerDocument = require("./swagger.json");
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/tcr/users", users);
 app.use("/tcr/admin", admin);
+app.use("/tcr/items", items);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

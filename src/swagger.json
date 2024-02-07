@@ -190,6 +190,43 @@
           }
         ]
       }
+    },
+    "/tcr/items/add-item": {
+      "post": {
+        "tags": ["Items"],
+        "summary": "Add an item",
+        "operationId": "add-item",
+        "consumes": ["application/json", "application/xml"],
+        "produces": ["application/xml", "application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Data provided for new item is invalid."
+          },
+          "409": {
+            "description": "Item with listed name already exists."
+          },
+          "500": {
+            "description": "Request to add item could not be completed. Please contact your administrator."
+          },
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -275,6 +312,23 @@
         },
         "npassword": {
           "type": "string"
+        }
+      }
+    },
+    "Item": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "group": {
+          "type": "string",
+          "enum": ["JUNIORS", "TEENS", "SENIORS"]
         }
       }
     }
