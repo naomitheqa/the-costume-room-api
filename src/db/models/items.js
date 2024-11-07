@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       count: DataTypes.INTEGER,
       status: DataTypes.ENUM("OUT", "IN"),
       group: DataTypes.ENUM("SENIORS", "TEENS", "JUNIORS"),
+      filePath: DataTypes.STRING,
     },
     {
       sequelize,
