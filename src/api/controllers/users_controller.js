@@ -76,13 +76,15 @@ export class UserController {
   }
 
   /**
-   * Assess whether or not a provided header contains a valid JWT token
+   * Assess whether a provided header contains a valid JWT token
    * @param {Object} header
    */
   async validateAccessToken(header) {
     if (header && header.authorization) {
       const token = header.authorization.split(" ")[1];
-      if (token) {
+      if (token === undefined) {
+        return null;
+      } else {
         const payload = jwt.verify(token, process.env.SECRET_KEY);
         if (payload && payload.id) {
           try {
@@ -99,7 +101,7 @@ export class UserController {
           return { isfound: false };
         }
       }
-      return null;
     }
+    return null;
   }
 }

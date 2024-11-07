@@ -38,7 +38,7 @@ export const login = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
+    return 0;
   }
 };
 
@@ -95,6 +95,6 @@ export const updatePassword = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
+    return 0;
   }
 };

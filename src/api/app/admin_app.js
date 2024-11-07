@@ -68,7 +68,6 @@ export const addAdmin = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
   }
 };
 
@@ -128,7 +127,6 @@ export const addUser = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
   }
 };
 
@@ -162,8 +160,7 @@ export const getAllAdmins = async function (req, res) {
       res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
+    res.status(500).json(new Error(err));
   }
 };
 
@@ -198,7 +195,6 @@ export const getAllUsers = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
   }
 };
 
@@ -250,6 +246,5 @@ export const removeUser = async function (req, res) {
     }
   } catch (err) {
     res.status(500).json(new Error("Oops...", { cause: err }));
-    return;
   }
 };

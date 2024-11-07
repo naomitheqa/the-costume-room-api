@@ -71,3 +71,29 @@ module.exports.selectItemByName = async function (name) {
     return 1;
   }
 };
+
+module.exports.selectAllItems = async function () {
+  const items = [];
+  try {
+    const temp = await item.findAll({
+      raw: true,
+    });
+
+    temp.forEach((item) => {
+      const itemObj = new Item(
+        item.id,
+        item.name,
+        item.description,
+        item.count,
+        item.status,
+        item.group
+      );
+
+      items.push(itemObj);
+    });
+
+    return items;
+  } catch (err) {
+    return 1;
+  }
+};

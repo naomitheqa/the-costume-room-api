@@ -196,8 +196,6 @@
         "tags": ["Items"],
         "summary": "Add an item",
         "operationId": "add-item",
-        "consumes": ["application/json", "application/xml"],
-        "produces": ["application/xml", "application/json"],
         "requestBody": {
           "content": {
             "application/json": {
@@ -219,6 +217,29 @@
           },
           "201": {
             "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/tcr/items/items": {
+      "get": {
+        "tags": ["Items"],
+        "summary": "Get all items",
+        "operationId": "get-items",
+        "responses": {
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Could not complete request to get all items. Please contact your administrator."
+          },
+          "200": {
+            "description": "List of items retrieved."
           }
         },
         "security": [
