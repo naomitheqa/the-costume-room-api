@@ -10,6 +10,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      hashid: {
+        type: Sequelize.UUID,
+        allowNull: false,
+        unique: true,
+        defaultValue: Sequelize.UUIDV4,
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -22,7 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      staus: {
+      status: {
         type: Sequelize.ENUM("OUT", "IN"),
         allowNull: false,
       },
@@ -30,10 +36,10 @@ module.exports = {
         type: Sequelize.ENUM("SENIORS", "TEENS", "JUNIORS"),
         allowNull: false,
       },
-      filePath: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
+      // filePath: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

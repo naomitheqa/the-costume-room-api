@@ -3,7 +3,6 @@ import { Validator } from "../../helpers/validator.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// const userData = new UserData();
 const validator = new Validator();
 
 export class AdminController {

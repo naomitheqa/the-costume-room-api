@@ -30,6 +30,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev-start": "nodemon --exec babel-node src/index.js",
+    "clear": "npm cache clean --force",
     "lint": "eslint ./src",
     "test": "jest",
     "migrate": "npx sequelize-cli db:migrate",
