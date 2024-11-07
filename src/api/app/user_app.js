@@ -37,11 +37,12 @@ export const login = async function (req, res) {
       );
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
     return 0;
   }
 };
 
+// eslint-disable-next-line max-lines-per-function
 export const updatePassword = async function (req, res) {
   const { userId, cpassword, npassword } = req.body;
   if (!(userId && cpassword && npassword)) {
@@ -54,7 +55,9 @@ export const updatePassword = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound) {
+    if (ans === null) {
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+    } else if (ans.isfound) {
       const response = await userController.updatePassword(
         userId,
         cpassword,
@@ -91,10 +94,16 @@ export const updatePassword = async function (req, res) {
         res.status(204).json(responseController.SuccessfulNoContent());
       }
     } else {
-      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+      res
+        .status(500)
+        .json(
+          responseController.CouldNotCompleteRequest(
+            "There was an error processing you request."
+          )
+        );
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
     return 0;
   }
 };

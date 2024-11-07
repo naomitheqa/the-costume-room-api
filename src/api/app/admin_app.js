@@ -6,6 +6,7 @@ const userController = new UserController();
 const responseController = new ResponseController();
 const adminController = new AdminController();
 
+// eslint-disable-next-line max-lines-per-function
 export const addAdmin = async function (req, res) {
   const { firstName, lastName, email } = req.body;
   if (!(firstName && lastName && email)) {
@@ -18,7 +19,9 @@ export const addAdmin = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType === "ADMIN") {
+    if (ans === null) {
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+    } else if (ans.isfound && ans.userType === "ADMIN") {
       const user = await adminController.createAdmin(
         firstName,
         lastName,
@@ -64,13 +67,20 @@ export const addAdmin = async function (req, res) {
         );
       }
     } else {
-      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+      res
+        .status(500)
+        .json(
+          responseController.CouldNotCompleteRequest(
+            "There was an error processing your request.."
+          )
+        );
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
   }
 };
 
+// eslint-disable-next-line max-lines-per-function
 export const addUser = async function (req, res) {
   const { firstName, lastName, email, expiryDate } = req.body;
   if (!(firstName && lastName && email && expiryDate)) {
@@ -81,7 +91,10 @@ export const addUser = async function (req, res) {
   }
   try {
     const ans = await userController.validateAccessToken(req.headers);
-    if (ans.isfound && ans.userType === "ADMIN") {
+
+    if (ans === null) {
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+    } else if (ans.isfound && ans.userType === "ADMIN") {
       const user = await adminController.createUser(
         firstName,
         lastName,
@@ -123,10 +136,16 @@ export const addUser = async function (req, res) {
         );
       }
     } else {
-      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+      res
+        .status(500)
+        .json(
+          responseController.CouldNotCompleteRequest(
+            "There was an error processing your request."
+          )
+        );
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
   }
 };
 
@@ -134,7 +153,9 @@ export const getAllAdmins = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType === "ADMIN") {
+    if (ans === null) {
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+    } else if (ans.isfound && ans.userType === "ADMIN") {
       const admins = await adminController.listAdmins();
 
       if (admins === 1) {
@@ -157,7 +178,13 @@ export const getAllAdmins = async function (req, res) {
           );
       }
     } else {
-      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+      res
+        .status(500)
+        .json(
+          responseController.CouldNotCompleteRequest(
+            "There was an error processing your request."
+          )
+        );
     }
   } catch (err) {
     res.status(500).json(new Error(err));
@@ -168,7 +195,9 @@ export const getAllUsers = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType === "ADMIN") {
+    if (ans === null) {
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+    } else if (ans.isfound && ans.userType === "ADMIN") {
       const users = await adminController.listGeneralUsers();
 
       if (users === 1) {
@@ -191,10 +220,16 @@ export const getAllUsers = async function (req, res) {
           );
       }
     } else {
-      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+      res
+        .status(500)
+        .json(
+          responseController.CouldNotCompleteRequest(
+            "There was an error processing your request."
+          )
+        );
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
   }
 };
 
@@ -210,7 +245,9 @@ export const removeUser = async function (req, res) {
   try {
     const ans = await userController.validateAccessToken(req.headers);
 
-    if (ans.isfound && ans.userType === "ADMIN") {
+    if (ans === null) {
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+    } else if (ans.isfound && ans.userType === "ADMIN") {
       const confirm = await adminController.deleteUser(id, req.headers);
 
       if (confirm.response === -1) {
@@ -242,9 +279,15 @@ export const removeUser = async function (req, res) {
           );
       }
     } else {
-      res.status(401).json(responseController.Unauthorized("Unauthorized."));
+      res
+        .status(500)
+        .json(
+          responseController.CouldNotCompleteRequest(
+            "There was an error processing your request."
+          )
+        );
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
   }
 };
