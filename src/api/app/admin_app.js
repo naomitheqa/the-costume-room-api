@@ -67,13 +67,7 @@ export const addAdmin = async function (req, res) {
         );
       }
     } else {
-      res
-        .status(500)
-        .json(
-          responseController.CouldNotCompleteRequest(
-            "There was an error processing your request.."
-          )
-        );
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
     res.status(500).json(new Error(err));
@@ -136,13 +130,7 @@ export const addUser = async function (req, res) {
         );
       }
     } else {
-      res
-        .status(500)
-        .json(
-          responseController.CouldNotCompleteRequest(
-            "There was an error processing your request."
-          )
-        );
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
     res.status(500).json(new Error(err));
@@ -178,13 +166,7 @@ export const getAllAdmins = async function (req, res) {
           );
       }
     } else {
-      res
-        .status(500)
-        .json(
-          responseController.CouldNotCompleteRequest(
-            "There was an error processing your request."
-          )
-        );
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
     res.status(500).json(new Error(err));
@@ -220,13 +202,7 @@ export const getAllUsers = async function (req, res) {
           );
       }
     } else {
-      res
-        .status(500)
-        .json(
-          responseController.CouldNotCompleteRequest(
-            "There was an error processing your request."
-          )
-        );
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
     res.status(500).json(new Error(err));
@@ -279,13 +255,7 @@ export const removeUser = async function (req, res) {
           );
       }
     } else {
-      res
-        .status(500)
-        .json(
-          responseController.CouldNotCompleteRequest(
-            "There was an error processing your request."
-          )
-        );
+      res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
     res.status(500).json(new Error(err));
