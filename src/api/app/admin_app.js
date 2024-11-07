@@ -151,7 +151,7 @@ export const getAllAdmins = async function (req, res) {
       res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
   }
 };
 

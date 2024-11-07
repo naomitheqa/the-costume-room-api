@@ -190,6 +190,64 @@
           }
         ]
       }
+    },
+    "/tcr/items/add-item": {
+      "post": {
+        "tags": ["Items"],
+        "summary": "Add an item",
+        "operationId": "add-item",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/Item"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Data provided for new item is invalid."
+          },
+          "409": {
+            "description": "Item with listed name already exists."
+          },
+          "500": {
+            "description": "Request to add item could not be completed. Please contact your administrator."
+          },
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/tcr/items/items": {
+      "get": {
+        "tags": ["Items"],
+        "summary": "Get all items",
+        "operationId": "get-items",
+        "responses": {
+          "401": {
+            "description": "Unauthorized."
+          },
+          "500": {
+            "description": "Could not complete request to get all items. Please contact your administrator."
+          },
+          "200": {
+            "description": "List of items retrieved."
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -275,6 +333,23 @@
         },
         "npassword": {
           "type": "string"
+        }
+      }
+    },
+    "Item": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "group": {
+          "type": "string",
+          "enum": ["JUNIORS", "TEENS", "SENIORS"]
         }
       }
     }
