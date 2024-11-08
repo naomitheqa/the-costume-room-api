@@ -1,12 +1,13 @@
 const { item } = require("../../../db/models");
 class Item {
-  constructor(id, name, description, count, status, group) {
+  constructor(id, name, description, count, status, group, filePath) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.count = count;
     this.status = status;
     this.group = group;
+    this.filePath = filePath;
   }
 }
 
@@ -15,7 +16,8 @@ module.exports.insertItem = async function (
   description,
   count,
   status,
-  group
+  group,
+  filePath
 ) {
   try {
     const temp = await item.create({
@@ -24,6 +26,7 @@ module.exports.insertItem = async function (
       count: count,
       status: status,
       group: group,
+      filePath: filePath,
     });
 
     if (temp) {
@@ -33,7 +36,8 @@ module.exports.insertItem = async function (
         temp.dataValues.description,
         temp.dataValues.count,
         temp.dataValues.status,
-        temp.dataValues.group
+        temp.dataValues.group,
+        temp.dataValues.filePath
       );
     } else {
       return 2;
@@ -62,7 +66,8 @@ module.exports.selectItemByName = async function (name) {
           temp.dataValues.description,
           temp.dataValues.count,
           temp.dataValues.status,
-          temp.dataValues.group
+          temp.dataValues.group,
+          temp.dataValues.filePath
         );
       }
     } catch (err) {
@@ -86,7 +91,8 @@ module.exports.selectAllItems = async function () {
         item.description,
         item.count,
         item.status,
-        item.group
+        item.group.toUpperCase(),
+        item.filePath
       );
 
       items.push(itemObj);

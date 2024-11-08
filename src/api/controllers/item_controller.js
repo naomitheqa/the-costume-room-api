@@ -1,5 +1,7 @@
 import itemData from "../data/logic/item_data.js";
+import "dotenv/config";
 import { Validator } from "../../helpers/validator.js";
+import { fetchItemImage, uploadImage } from "../../helpers/image_mgmt.js";
 
 const validator = new Validator();
 
@@ -10,6 +12,7 @@ export class ItemController {
    */
   async listAllItems() {
     const items = [];
+
     try {
       const temp = await itemData.selectAllItems();
 
@@ -24,6 +27,7 @@ export class ItemController {
             count: item.count,
             status: item.status,
             group: item.group,
+            filePath: item.filePath,
           };
 
           items.push(tempItem);
@@ -35,7 +39,7 @@ export class ItemController {
     }
   }
 
-  async addItem(name, description, count, group) {
+  async addItem(name, description, count, group, file) {
     if (
       validator.name(name) &&
       validator.description(description) &&
@@ -44,6 +48,8 @@ export class ItemController {
     ) {
       try {
         const item = await itemData.selectItemByName(name);
+        const imgData = await uploadImage(process.env.BUCKET_NAME, "", file);
+        console.log(`Uploaded img: ${imgData}`);
 
         if (item === 1) {
           return await itemData.insertItem(
@@ -51,7 +57,8 @@ export class ItemController {
             description,
             count,
             "IN",
-            group
+            group,
+            file.name
           );
         } else {
           return 1;

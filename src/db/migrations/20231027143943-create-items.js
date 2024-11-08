@@ -36,10 +36,11 @@ module.exports = {
         type: Sequelize.ENUM("SENIORS", "TEENS", "JUNIORS"),
         allowNull: false,
       },
-      // filePath: {
-      //   type: Sequelize.STRING,
-      //   allowNull: false,
-      // },
+      filePath: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "Logo.png",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

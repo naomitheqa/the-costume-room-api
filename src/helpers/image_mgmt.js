@@ -6,6 +6,24 @@ const supabaseAnonKey = process.env.ANON_KEY;
 
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+const { data: user, error } = await supabase.auth.signInWithPassword({
+  email: process.env.SUPABASE_EMAIL,
+  password: process.env.SUPABASE_PASSWORD,
+});
+
+if (user) {
+  console.log(`Authenticated to Supabase with ${user.user.email}`);
+} else {
+  console.log(`Error authentication to Supabase: ${error}`);
+}
+
+/**
+ * Get signed URL for object at file path
+ * @param bucketName
+ * @param filePath
+ * @param expiresIn
+ * @returns {Promise<string|null>}
+ */
 const getSignedUrl = async function (bucketName, filePath, expiresIn = 60) {
   console.log(`Fetching signed URL for ${filePath} in bucket ${bucketName}...`);
 
@@ -58,4 +76,21 @@ export const fetchItemImage = async function (filePath) {
   } else {
     console.log("Failed to get signed URL.");
   }
+};
+
+export const uploadImage = async (bucketName, filePath, file) => {
+  const { data, error } = await supabase.storage
+    .from(bucketName)
+    .upload(filePath, file, {
+      cacheControl: "3600",
+      upsert: false, // Set to true to overwrite an existing file with the same name
+    });
+
+  if (error) {
+    console.error("Error uploading image:", error.message);
+    return null;
+  }
+
+  console.log("Uploaded file:", data);
+  return data;
 };

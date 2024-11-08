@@ -38,9 +38,11 @@ export const getAllItems = async function (req, res) {
   }
 };
 
+// eslint-disable-next-line max-lines-per-function
 export const addItem = async function (req, res) {
-  const { name, description, count, group } = req.body;
-  if (!(name && description && count && group)) {
+  const { name, description, count, group, file } = req.body;
+  console.log(file.name)
+  if (!(name && description && count && group && file)) {
     res
       .status(400)
       .json(responseController.BadRequest("Some data has not been provided."));
@@ -55,7 +57,8 @@ export const addItem = async function (req, res) {
         name,
         description,
         count,
-        group
+        group,
+        file
       );
 
       if (item === 0) {
@@ -107,6 +110,6 @@ export const addItem = async function (req, res) {
       res.status(401).json(responseController.Unauthorized("Unauthorized."));
     }
   } catch (err) {
-    res.status(500).json(new Error("Oops...", { cause: err }));
+    res.status(500).json(new Error(err));
   }
 };
